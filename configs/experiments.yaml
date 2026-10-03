@@ -1,0 +1,56 @@
+# ============================================================================
+# experiments.yaml — Global Experiment Configuration
+# ============================================================================
+# FROZEN: Do not modify after probe execution begins.
+# All non-negotiable guardrails from the implementation plan are encoded here.
+# ============================================================================
+
+# Model specification (non-negotiable)
+model: "jev-latest"
+
+# Random seed for deterministic sampling
+seed: 42
+
+# Phase 0 smoke test: N examples per task
+phase0_n: 20
+
+# Phase 1 full probe: sample sizes per dataset
+phase1_sizes:
+  dataset_a_sentiment: 150
+  dataset_b_sold: 150
+  dataset_c1_nsina_categories: 100
+  dataset_c2_nsina_media: 100
+  dataset_d_sinhalammlu: 150
+  dataset_e_salangabhava: 150
+  dataset_f_cmcs: 150
+
+# ECE calibration bins
+ece_bins: 10
+
+# TypeSafe SDK retry policy (exponential backoff with jitter)
+max_retries: 5
+backoff_initial: 2.0    # seconds
+backoff_max: 30.0       # seconds
+backoff_jitter: 0.5     # seconds
+
+# Confidence thresholds for risk-coverage analysis (Stage 6 / RQ3)
+confidence_thresholds:
+  - 0.50
+  - 0.70
+  - 0.80
+  - 0.90
+  - 0.95
+
+# Option-order permutation test (Stage 6)
+option_order_n: 40
+option_order_permutations:
+  - "original"    # [A, B, C, D]
+  - "shifted"     # [B, C, D, A]
+  - "inverted"    # [D, C, B, A]
+
+# Repeatability test (Stage 6)
+repeatability_n: 100
+repeatability_runs: 3
+
+# Prompt sensitivity experiment (Stage 5)
+prompt_sensitivity_n: 50

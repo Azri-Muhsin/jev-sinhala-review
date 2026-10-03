@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "generated_at": "2026-10-03T05:37:09.049659+00:00",
+    "random_seed": 42,
+    "phase0_target_per_task": 20,
+    "phase1_targets": {
+      "dataset_a_sentiment": 150,
+      "dataset_b_sold": 150,
+      "dataset_c1_nsina_categories": 100,
+      "dataset_c2_nsina_media": 100,
+      "dataset_d_sinhalammlu": 150,
+      "dataset_e_salangabhava": 150,
+      "dataset_f_cmcs": 150
+    }
+  },
+  "phase0_smoke": {
+    "dataset_a_sentiment": {
+      "file": "phase0_smoke/dataset_a_sentiment_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "daef9dd4bf191cf13235fd1150aba48aa09e2190bb32ab6a1fadef7429aebb0e",
+      "label_distribution": {
+        "NEUTRAL": 9,
+        "POSITIVE": 5,
+        "NEGATIVE": 6
+      }
+    },
+    "dataset_b_sold": {
+      "file": "phase0_smoke/dataset_b_sold_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "14eaf25cbac75896fa41ae23a06824fa9f2050b71a11d3d7a7b509096af3e681",
+      "label_distribution": {
+        "OFF": 8,
+        "NOT": 12
+      }
+    },
+    "dataset_c1_nsina_categories": {
+      "file": "phase0_smoke/dataset_c1_nsina_categories_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "5b382c895f5b0a96d506d7b3b0bb74d6a02904361b2537a36e0d2b6002870f35",
+      "label_distribution": {
+        "Sports": 5,
+        "Business": 5,
+        "Local News": 5,
+        "International News": 5
+      }
+    },
+    "dataset_c2_nsina_media": {
+      "file": "phase0_smoke/dataset_c2_nsina_media_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "ae99dfaeea39b574ce1aeb6bf281914c7cccfafac8b2815d0e621d8f48ee9456",
+      "label_distribution": {
+        "hirunews": 2,
+        "Adaderana": 2,
+        "ITN news": 2,
+        "www.lankadeepa.lk": 2,
+        "Lankatruth": 2,
+        "www.vikalpa.org": 3,
+        "divaina": 2,
+        "dinamina": 2,
+        "Siyatha News": 1,
+        "https://sinhala.news.lk": 2
+      }
+    },
+    "dataset_d_sinhalammlu": {
+      "file": "phase0_smoke/dataset_d_sinhalammlu_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "fe32f7f1110d208cc86a0f638e6b0feaada0a24e13a778d9b8501abdc2ce5450",
+      "label_distribution": {
+        "B": 5,
+        "A": 5,
+        "C": 6,
+        "D": 4
+      }
+    },
+    "dataset_e_salangabhava": {
+      "file": "phase0_smoke/dataset_e_salangabhava_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "ad0427e9ff102da61ba1a7a644e10b68ecb05212f43cd34bd1b6cbfb427ab6a5",
+      "label_distribution": {
+        "5": 16,
+        "3": 1,
+        "4": 1,
+        "1": 1,
+        "2": 1
+      }
+    },
+    "dataset_f_cmcs": {
+      "file": "phase0_smoke/dataset_f_cmcs_smoke.jsonl",
+      "sample_size": 20,
+      "sha256": "9862922ac096a1a6ada75fe34fac9bf8aaecc96f1eda5339b66f05afe2fe57e6",
+      "label_distribution": {
+        "NEGATIVE": 5,
+        "CONFLICT": 1,
+        "NEUTRAL": 12,
+        "POSITIVE": 2
+      }
+    }
+  },
+  "phase1_samples": {
+    "dataset_a_sentiment": {
+      "file": "samples/dataset_a_sentiment.jsonl",
+      "sample_size": 150,
+      "sha256": "3c2f72ba5f1088a967866f7c689b685a4dac757b9d2fc057d534542abd7339f9",
+      "label_distribution": {
+        "NEUTRAL": 68,
+        "POSITIVE": 40,
+        "NEGATIVE": 42
+      }
+    },
+    "dataset_b_sold": {
+      "file": "samples/dataset_b_sold.jsonl",
+      "sample_size": 150,
+      "sha256": "a9ddb8fe82c98679e10da80ca00114e2db023a9b754a2b7eaf45313e13d3603a",
+      "label_distribution": {
+        "OFF": 61,
+        "NOT": 89
+      }
+    },
+    "dataset_c1_nsina_categories": {
+      "file": "samples/dataset_c1_nsina_categories.jsonl",
+      "sample_size": 100,
+      "sha256": "4d498f679687b2c131e5b99a9e20de4e1144a9b11b8fde29ca752e97bdf18560",
+      "label_distribution": {
+        "Sports": 25,
+        "Local News": 26,
+        "Business": 23,
+        "International News": 26
+      }
+    },
+    "dataset_c2_nsina_media": {
+      "file": "samples/dataset_c2_nsina_media.jsonl",
+      "sample_size": 100,
+      "sha256": "d1ef4ce2f9f78621cf3caacbe40e0931e6ebd698323fb9f5386cddad20d9b3a9",
+      "label_distribution": {
+        "hirunews": 11,
+        "https://sinhala.news.lk": 11,
+        "Lankatruth": 11,
+        "Adaderana": 11,
+        "ITN news": 11,
+        "www.lankadeepa.lk": 11,
+        "www.vikalpa.org": 11,
+        "divaina": 11,
+        "dinamina": 8,
+        "Siyatha News": 4
+      }
+    },
+    "dataset_d_sinhalammlu": {
+      "file": "samples/dataset_d_sinhalammlu.jsonl",
+      "sample_size": 150,
+      "sha256": "5ba66d4dcf216c3d49f4bf98dae477eebd85265f20834b538d8b0f4c59521507",
+      "label_distribution": {
+        "A": 38,
+        "D": 30,
+        "B": 41,
+        "C": 41
+      }
+    },
+    "dataset_e_salangabhava": {
+      "file": "samples/dataset_e_salangabhava.jsonl",
+      "sample_size": 150,
+      "sha256": "958934f0303c65df0d364e3727658b8889861dc4d83daaceb8131acb68cdfcad",
+      "label_distribution": {
+        "5": 127,
+        "1": 9,
+        "2": 2,
+        "4": 8,
+        "3": 4
+      }
+    },
+    "dataset_f_cmcs": {
+      "file": "samples/dataset_f_cmcs.jsonl",
+      "sample_size": 150,
+      "sha256": "94625450a78d5f0297e637c556d04b0e4d01b82e165414acc1a415ffd5f1e825",
+      "label_distribution": {
+        "NEUTRAL": 95,
+        "POSITIVE": 13,
+        "NEGATIVE": 41,
+        "CONFLICT": 1
+      }
+    }
+  }
+}

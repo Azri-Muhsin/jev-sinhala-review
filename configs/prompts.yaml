@@ -1,0 +1,115 @@
+# ============================================================================
+# prompts.yaml — Frozen Prompt Definitions
+# ============================================================================
+# FROZEN: Do not modify after probe execution begins.
+# All prompt templates for English and Sinhala instructions.
+# ============================================================================
+
+# ── Dataset A: Sinhala News-Comment Sentiment (4-way) ──────────────────────
+
+sentiment_choice:
+  english: "Which label best describes the overall sentiment of this text?"
+  sinhala: "මෙම පාඨයේ සමස්ත හැඟීම වඩාත් හොඳින් විස්තර කරන්නේ කුමන ලේබලයද?"
+
+sentiment_noul:
+  positive:
+    english: "Is the sentiment of this text positive?"
+    sinhala: "මෙම පාඨයේ හැඟීම ධනාත්මකද?"
+  negative:
+    english: "Is the sentiment of this text negative?"
+    sinhala: "මෙම පාඨයේ හැඟීම සෘණාත්මකද?"
+  neutral:
+    english: "Is the sentiment of this text neutral?"
+    sinhala: "මෙම පාඨයේ හැඟීම මධ්‍යස්ථද?"
+  conflict:
+    english: "Is the sentiment of this text conflict or mixed?"
+    sinhala: "මෙම පාඨයේ හැඟීම ගැටුම්කාරී හෝ මිශ්‍රද?"
+
+sentiment_score:
+  english: "Rate the sentiment of this text on an ordered scale."
+  sinhala: "මෙම පාඨයේ හැඟීම අනුක්‍රමික පරිමාණයක් මත ශ්‍රේණිගත කරන්න."
+
+# ── Dataset B: SOLD - Sinhala Offensive Language (Binary) ──────────────────
+
+sold_noul:
+  english: "Is this post offensive?"
+  sinhala: "මෙම පළ කිරීම අපහාසාත්මක එකක්ද?"
+
+sold_choice:
+  english: "Which label best describes this post?"
+  sinhala: "මෙම පළ කිරීම වඩාත් හොඳින් විස්තර කරන්නේ කුමන ලේබලයද?"
+
+sold_score:
+  english: "Rate the offensiveness of this post."
+  sinhala: "මෙම පළ කිරීමේ අපහාසාත්මක බව ශ්‍රේණිගත කරන්න."
+
+# ── Dataset C1: NSINA Categories (10-way) ──────────────────────────────────
+
+nsina_cat_choice:
+  english: "Which news category does this article belong to?"
+  sinhala: "මෙම පුවත් ලිපිය අයත් වන්නේ කුමන ප්‍රවර්ගයටද?"
+
+nsina_cat_noul:
+  english: "Does this article belong to the {category} category?"
+  sinhala: "මෙම ලිපිය {category} ප්‍රවර්ගයට අයත්ද?"
+
+# ── Dataset C2: NSINA Media Identification (10-way) ────────────────────────
+
+nsina_media_choice:
+  english: "Which media source published this article?"
+  sinhala: "මෙම ලිපිය ප්‍රකාශයට පත් කළේ කුමන මාධ්‍ය ආයතනයද?"
+
+nsina_media_noul:
+  english: "Was this article published by {source}?"
+  sinhala: "මෙම ලිපිය {source} විසින් ප්‍රකාශයට පත් කළද?"
+
+# ── Dataset D: SinhalaMMLU (4-option QA) ───────────────────────────────────
+
+mmlu_choice:
+  english: "Which answer is correct for this question?"
+  sinhala: "මෙම ප්‍රශ්නයට නිවැරදි පිළිතුර කුමක්ද?"
+
+mmlu_noul:
+  english: "Is option {option} the correct answer to this question?"
+  sinhala: "මෙම ප්‍රශ්නයට {option} විකල්පය නිවැරදි පිළිතුරද?"
+
+# ── Dataset E: SalAngaBhava (Ordinal 1-5 Rating) ──────────────────────────
+
+salangabhava_score:
+  english: "Rate this product review on a scale from 1 (worst) to 5 (best)."
+  sinhala: "මෙම නිෂ්පාදන සමාලෝචනය 1 (නරකම) සිට 5 (හොඳම) දක්වා වූ පරිමාණයක ශ්‍රේණිගත කරන්න."
+
+salangabhava_choice:
+  english: "Which rating best matches this review?"
+  sinhala: "මෙම සමාලෝචනයට වඩාත් ගැලපෙන ශ්‍රේණිගත කිරීම කුමක්ද?"
+
+salangabhava_noul_high:
+  english: "Is the rating of this review 4 or 5 (satisfied)?"
+  sinhala: "මෙම සමාලෝචනයේ ශ්‍රේණිගත කිරීම 4 හෝ 5ද (සතුටුදායකද)?"
+
+salangabhava_noul_low:
+  english: "Is the rating of this review 1 or 2 (dissatisfied)?"
+  sinhala: "මෙම සමාලෝචනයේ ශ්‍රේණිගත කිරීම 1 හෝ 2ද (අසතුටුදායකද)?"
+
+# ── Dataset F: CMCS (Code-Mixed Multi-task) ────────────────────────────────
+
+cmcs_sentiment_choice:
+  english: "Which label best describes the sentiment of this code-mixed text?"
+  sinhala: "මෙම කේත-මිශ්‍රිත (code-mixed) පාඨයේ හැඟීම වඩාත් හොඳින් විස්තර කරන්නේ කුමන ලේබලයද?"
+
+cmcs_humour_choice:
+  english: "Is this code-mixed text humorous or non-humorous?"
+  sinhala: "මෙම කේත-මිශ්‍රිත පාඨය හාස්‍යජනකද නැතහොත් හාස්‍යජනක නොවන එකක්ද?"
+
+cmcs_hate_choice:
+  english: "Which label best describes this code-mixed text: hate-inducing, abusive, or not offensive?"
+  sinhala: "මෙම කේත-මිශ්‍රිත පාඨය වඩාත් හොඳින් විස්තර කරන්නේ කුමන ලේබලයද: වෛරී සහගත (hate-inducing), අපයෝජනාත්මක (abusive), හෝ අපහාසාත්මක නොවන (not offensive)?"
+
+cmcs_aspect_noul:
+  english: "Does this review discuss the {aspect} aspect?"
+  sinhala: "මෙම සමාලෝචනය මඟින් {aspect} අංශය සාකච්ඡා කෙරේද?"
+
+cmcs_langid_choice:
+  english: "What is the primary language of this text?"
+  sinhala: "මෙම පාඨයේ ප්‍රධාන භාෂාව කුමක්ද?"
+

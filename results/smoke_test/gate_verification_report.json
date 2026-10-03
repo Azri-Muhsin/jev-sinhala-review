@@ -1,0 +1,27 @@
+{
+  "check1_zero_runtime_errors": {
+    "passed": true,
+    "error_count": 0,
+    "details": []
+  },
+  "check2_bidirectional_label_mapping": {
+    "passed": true,
+    "unmapped_count": 0
+  },
+  "check3_deserialization": {
+    "passed": true,
+    "invalid_probabilities_count": 0,
+    "invalid_confidence_count": 0
+  },
+  "check4_score_behavior": {
+    "passed": true,
+    "score_records_evaluated": 60
+  },
+  "check5_unicode_zwj_integrity": {
+    "passed": true,
+    "zwj_containing_interactions": 109
+  },
+  "gate_passed": true,
+  "total_interactions_logged": 320,
+  "verified_at": "2026-10-03T11:06:52.471671+00:00"
+}
