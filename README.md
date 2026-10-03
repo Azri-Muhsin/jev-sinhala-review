@@ -223,6 +223,31 @@ Evaluates non-standard, Romanized, and code-mixed Sinhala-English text across 5 
   * Performance degradation on Romanized Sinhala relative to pure Sinhala is only $\sim 3.2\%$, showing robust phonetic transliteration comprehension.
 * **Full Report:** [`results/stage7_cmcs/summary.md`](results/stage7_cmcs/summary.md) | [`cmcs_stress_report.json`](results/stage7_cmcs/cmcs_stress_report.json)
 
+### Stage 8 Quantitative Synthesis & Deliverables ──► [✓ COMPLETED]
+
+Stage 8 synthesizes all evaluation phases into four standardized CSV deliverables and seven publication-ready figures designed in *The Economist* visual language.
+
+#### 1. Synthesis CSV Artifacts (`results/`)
+
+* **[`results/main.csv`](results/main.csv):** Unified 15-row synthesis across all 6 benchmark datasets, evaluating Accuracy, Macro-F1, ECE, Brier Score, Mean Confidence, p50/p95 latency, and zero-shot comparison against published fine-tuned reference anchors (Subasa-XLM-R Macro-F1 0.84 on SOLD; SinBERT/XLM-R Macro-F1 0.88 on NSINA Media).
+* **[`results/primitive_consistency.csv`](results/primitive_consistency.csv):** Direct empirical cross-primitive parity metrics (RQ2), contrasting `Choice` vs. `Noul` binary argmax agreement across Sentiment, SOLD, NSINA Categories, SalAngaBhava, and CMCS.
+* **[`results/script_analysis.csv`](results/script_analysis.csv):** Orthographic resilience analysis breaking down accuracy, macro-F1, and calibration across Pure Sinhala, Romanized Singlish (Latin), and Code-Mixed text.
+* **[`results/failure_taxonomy.csv`](results/failure_taxonomy.csv):** Systematic audit of 50 extreme boundary cases (25 highest-confidence errors + 25 lowest-confidence correct decisions) categorized across 5 diagnostic failure taxonomy dimensions (*Linguistic/Dialect*, *Semantic Nuance*, *Label Boundary*, *Primitive Representation*, *Epistemic Calibration*).
+
+#### 2. Publication-Ready Figure Gallery (`results/figures/`)
+
+All figures adhere strictly to *The Economist* visual standards: red title tag (`#E3120B`), muted color palette (Blue `#006BA2`, Cyan `#3EBCD2`, Dark Grey `#758D99`), horizontal-only gridlines, left-aligned typography, and source attribution footers.
+
+| Figure | Description | File |
+| :--- | :--- | :--- |
+| **Fig 1: Zero-shot Capability** | Top-1 Accuracy and Macro-F1 across 8 tasks with published reference anchors | [`results/figures/fig1_accuracy_by_task.png`](results/figures/fig1_accuracy_by_task.png) |
+| **Fig 2: Calibration Profiles** | ECE comparison (Choice vs. Noul) and 10-bin empirical reliability curves | [`results/figures/fig2_calibration_by_task.png`](results/figures/fig2_calibration_by_task.png) |
+| **Fig 3: Confidence Separation** | Boxplot distributions showing epistemic separation for correct vs. incorrect decisions | [`results/figures/fig3_confidence_vs_correctness.png`](results/figures/fig3_confidence_vs_correctness.png) |
+| **Fig 4: Primitive Agreement** | 4-way decision agreement confusion matrix (89.3% parity: Choice vs. argmax Noul) | [`results/figures/fig4_primitive_agreement.png`](results/figures/fig4_primitive_agreement.png) |
+| **Fig 5: Risk-Coverage Curves** | Selective risk-coverage curves showing accuracy scaling to 95–100% at $\tau \ge 0.90$ | [`results/figures/fig5_risk_coverage.png`](results/figures/fig5_risk_coverage.png) |
+| **Fig 6: Script Type Comparison** | Pure Sinhala vs. Romanized Singlish vs. Code-Mixed accuracy and calibration error | [`results/figures/fig6_script_type_comparison.png`](results/figures/fig6_script_type_comparison.png) |
+| **Fig 7: Latency by Primitive** | Median (p50) and 95th-percentile (p95) API response times across Choice, Noul, Score | [`results/figures/fig7_latency_by_primitive.png`](results/figures/fig7_latency_by_primitive.png) |
+
 ---
 
 ## 6. Project Layout
@@ -231,7 +256,8 @@ Evaluates non-standard, Romanized, and code-mixed Sinhala-English text across 5 
 jev-sintam-review/
 ├── configs/
 │   ├── experiments.yaml           # Global parameters, sample sizes, retry policy
-│   └── prompts.yaml               # Frozen prompt definitions (English & Sinhala)
+│   ├── prompts.yaml               # Frozen prompt definitions (English & Sinhala)
+│   └── reference_anchors.yaml     # Published fine-tuned benchmark anchors
 ├── data/
 │   ├── raw/                       # Cached upstream source files
 │   └── processed/
@@ -243,7 +269,7 @@ jev-sintam-review/
 │   ├── config.py                  # Experiment configuration and environment setup
 │   ├── loaders/                   # Modular dataset loaders (A, B, C, D, E, F)
 │   ├── sampling/                  # Stratified deterministic sampler (seed=42)
-│   ├── runners/                   # Experiment runners
+│   ├── runners/                   # Experiment runners (Stages 2–7)
 │   │   ├── base_runner.py         # Abstract base runner with Section 5 record logging
 │   │   ├── runner_smoke_test.py   # Stage 2 smoke test runner & gate verifier
 │   │   ├── runner_stage3_sentiment.py # Stage 3 Sentiment Primitive Equivalence
@@ -251,15 +277,30 @@ jev-sintam-review/
 │   │   ├── runner_stage5_prompt_sensitivity.py # Stage 5 Language & Prompt Sensitivity
 │   │   ├── runner_stage6_diagnostics.py        # Stage 6 Option Order & Repeatability
 │   │   └── runner_stage7_cmcs.py               # Stage 7 Code-Mixed Stress Track
-│   └── metrics/                   # Classification, calibration, consistency, sensitivity, diagnostics
+│   ├── metrics/                   # Classification, calibration, consistency, sensitivity, diagnostics
+│   └── visualization/             # Stage 8 Synthesis & Figure Generation
+│       ├── economist_style.py     # Economist styling rules, colors, and layout decorators
+│       ├── synthesis_tables.py    # Cross-stage synthesis CSV table generator
+│       └── plot_generator.py      # Matplotlib/Seaborn figure generator
 ├── results/
+│   ├── main.csv                   # 15-task summary table with reference anchors
+│   ├── primitive_consistency.csv  # RQ2 cross-primitive parity metrics
+│   ├── script_analysis.csv        # Script breakdown (Pure vs. Singlish vs. Mixed)
+│   ├── failure_taxonomy.csv       # Qualitative audit of 50 extreme boundary cases
+│   ├── figures/                   # 7 publication-ready Economist-styled figures
+│   │   ├── fig1_accuracy_by_task.png
+│   │   ├── fig2_calibration_by_task.png
+│   │   ├── fig3_confidence_vs_correctness.png
+│   │   ├── fig4_primitive_agreement.png
+│   │   ├── fig5_risk_coverage.png
+│   │   ├── fig6_script_type_comparison.png
+│   │   └── fig7_latency_by_primitive.png
 │   ├── smoke_test/                # Gate verification report & smoke predictions
 │   ├── stage3_sentiment/          # Stage 3 logs, consistency matrices, and tables
 │   ├── stage4_core/               # Stage 4 logs, task accuracy, and calibration reports
 │   ├── stage5_prompt_sensitivity/ # Stage 5 paired EN vs SI sensitivity reports
 │   ├── stage6_diagnostics/        # Stage 6 permutation, repeatability, and risk reports
-│   ├── stage7_cmcs/               # Stage 7 multi-task code-mixed stress reports
-│   └── figures/                   # Generated evaluation plots and diagrams
+│   └── stage7_cmcs/               # Stage 7 multi-task code-mixed stress reports
 ├── tests/
 │   ├── test_loaders.py            # Unit tests for data loaders & ZWJ preservation
 │   ├── test_metrics.py            # Unit tests for evaluation metrics suite
@@ -299,4 +340,5 @@ python main.py --stage 4   # Stage 4: Core Pure-Sinhala Tasks (N=650)
 python main.py --stage 5   # Stage 5: Language & Prompt Sensitivity Experiment (N=100)
 python main.py --stage 6   # Stage 6: Primitive Diagnostics & Robustness (N=140)
 python main.py --stage 7   # Stage 7: Code-Mixed Stress Track (N=150)
+python main.py --stage 8   # Stage 8: Quantitative Synthesis & Economist-styled Deliverables
 ```

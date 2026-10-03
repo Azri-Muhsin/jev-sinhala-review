@@ -1,0 +1,5 @@
+dataset,script_type,n,accuracy,macro_f1,ece,mean_confidence,p50_latency_ms
+salangabhava,Pure_Sinhala,150,0.78,0.344,0.191,0.604,307.1
+cmcs,Code_Mixed,17,0.706,0.586,0.205,0.668,303.8
+cmcs,Pure_Sinhala,22,0.636,0.436,0.304,0.751,334.0
+cmcs,Sinhala_in_Latin,111,0.604,0.43,0.209,0.719,303.9

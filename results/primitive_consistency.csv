@@ -1,0 +1,4 @@
+task,n,choice_noul_agreement,noul_contradiction_rate,choice_score_agreement,prob_order_consistency
+sentiment_news_4way,150,0.893,0.447,0.899,0.94
+code_mixed_humour,150,0.973,0.0,0.0,0.973
+code_mixed_hate_speech,150,0.98,0.0,0.0,0.98

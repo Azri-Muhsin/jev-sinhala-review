@@ -301,6 +301,34 @@ def stage7_cmcs_stress() -> bool:
         runner.close()
 
 
+def stage8_deliverables() -> bool:
+    """Stage 8: Quantitative Synthesis, Reference Anchors & Economist-styled Figures.
+
+    Generates:
+      - results/main.csv (15 task/primitive configurations with reference anchors)
+      - results/primitive_consistency.csv (RQ2 cross-primitive parity metrics)
+      - results/script_analysis.csv (Pure Sinhala vs Singlish vs Code-mixed)
+      - results/failure_taxonomy.csv (Audited failure taxonomy of 50 samples)
+      - results/figures/fig1_accuracy_by_task.png through fig7_latency_by_primitive.png
+    """
+    from src.visualization.synthesis_tables import generate_all_synthesis_tables
+    from src.visualization.plot_generator import generate_all_figures
+
+    print("\n── Stage 8: Quantitative Synthesis & Economist-styled Deliverables ──")
+    try:
+        tables = generate_all_synthesis_tables()
+        figures = generate_all_figures()
+        print("\n" + "─" * 70)
+        print("  ✓ STAGE 8 PASSED — All synthesis tables and figures generated")
+        print(f"    Tables: {len(tables)} CSV artifacts in results/")
+        print(f"    Figures: {len(figures)} Economist-styled PNGs in results/figures/")
+        print("─" * 70)
+        return True
+    except Exception as e:
+        print(f"  ✗ Stage 8 execution failed: {e}")
+        return False
+
+
 def main() -> None:
     """Run the requested probe stage."""
     import argparse
@@ -311,9 +339,9 @@ def main() -> None:
     parser.add_argument(
         "--stage",
         type=int,
-        choices=[0, 1, 2, 3, 4, 5, 6, 7],
+        choices=[0, 1, 2, 3, 4, 5, 6, 7, 8],
         default=None,
-        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), 4 (Core Tasks), 5 (Sensitivity), 6 (Diagnostics), 7 (CMCS Stress)",
+        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), 4 (Core Tasks), 5 (Sensitivity), 6 (Diagnostics), 7 (CMCS Stress), 8 (Synthesis & Figures)",
     )
     args = parser.parse_args()
 
@@ -335,6 +363,8 @@ def main() -> None:
         success = stage6_diagnostics()
     elif args.stage == 7:
         success = stage7_cmcs_stress()
+    elif args.stage == 8:
+        success = stage8_deliverables()
     else:
         # Default run
         s0 = stage0_health_check()

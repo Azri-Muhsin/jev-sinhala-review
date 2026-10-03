@@ -1,1 +1,3 @@
-# Publication-ready figure generation (Matplotlib / Seaborn)
+"""
+src/visualization — Publication figures for the Jev-Sinhala probe.
+"""

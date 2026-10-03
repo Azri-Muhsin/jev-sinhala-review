@@ -40,7 +40,8 @@ data/raw/
 
 # Results (regenerated from code)
 results/raw_logs/
-results/figures/
+results/figures/*
+!results/figures/*.png
 results/**/*.jsonl
 !results/**/summary.md
 !results/**/gate_verification_report.json
