@@ -235,6 +235,22 @@ def stage3_sentiment_equivalence() -> bool:
         runner.close()
 
 
+def stage4_core_tasks() -> bool:
+    """Stage 4: Core Pure-Sinhala Tasks Execution (N=650).
+
+    Executes Phase 1 full probe across SOLD, NSINA Categories, NSINA Media,
+    SinhalaMMLU, and SalAngaBhava.
+    """
+    from src.runners.runner_stage4_core import CorePureSinhalaRunner
+
+    runner = CorePureSinhalaRunner()
+    try:
+        report = runner.run()
+        return report.get("total_examples", 0) > 0
+    finally:
+        runner.close()
+
+
 def main() -> None:
     """Run the requested probe stage."""
     import argparse
@@ -245,9 +261,9 @@ def main() -> None:
     parser.add_argument(
         "--stage",
         type=int,
-        choices=[0, 1, 2, 3],
+        choices=[0, 1, 2, 3, 4],
         default=None,
-        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), or 3 (Sentiment Primitive Equivalence)",
+        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), or 4 (Core Pure-Sinhala Tasks)",
     )
     args = parser.parse_args()
 
@@ -261,8 +277,10 @@ def main() -> None:
         success = stage2_smoke_test()
     elif args.stage == 3:
         success = stage3_sentiment_equivalence()
+    elif args.stage == 4:
+        success = stage4_core_tasks()
     else:
-        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3
+        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3 -> Stage 4
         s0 = stage0_health_check()
         if not s0:
             sys.exit(1)
@@ -272,7 +290,10 @@ def main() -> None:
         s2 = stage2_smoke_test()
         if not s2:
             sys.exit(1)
-        success = stage3_sentiment_equivalence()
+        s3 = stage3_sentiment_equivalence()
+        if not s3:
+            sys.exit(1)
+        success = stage4_core_tasks()
 
     sys.exit(0 if success else 1)
 

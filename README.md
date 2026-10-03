@@ -119,8 +119,8 @@ Stage 2: Phase 0 Smoke Test (20 items/task end-to-end) ────────�
 Stage 3: Sentiment Primitive Equivalence Lab (N=150) ──────────► [✓ COMPLETED]
    │     (89.3% Argmax agreement, Choice 60.7% vs Noul 56.7%, Score rho=0.899)
    │
-Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [IN PROGRESS]
-   │     (Phase 1 full probe, N=650 items across 5 tasks)
+Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [✓ COMPLETED]
+   │     (650 examples, MMLU: 73.3%, NSINA Cat: 83.0%, SalAnga: 78.0%, SOLD: 64.7%)
    │
 Stage 5: Language & Prompt Sensitivity (English vs. Sinhala) ──► [PENDING]
    │
@@ -153,6 +153,19 @@ Stage 8: Quantitative Synthesis & Final Report ───────────
   * **Score vs. Choice Ordinal Alignment:** Continuous Score expectation $\mathbb{E}[S]$ correlates strongly with Choice ($\mathbf{\rho = 0.899}$, $p < 0.0001$, $\text{MAE} = 0.224$).
 * **Risk-Coverage:** Confidence thresholding effectively filters errors, scaling accuracy from **$60.7\%$** at baseline to **$86.0\%$** ($\tau \ge 0.90$, 38% coverage) and **$89.5\%$** ($\tau \ge 0.95$, 25% coverage).
 * **Full Report:** [`results/stage3_sentiment/summary.md`](results/stage3_sentiment/summary.md) | [`primitive_consistency_report.json`](results/stage3_sentiment/primitive_consistency_report.json)
+
+### Stage 4 Core Pure-Sinhala Tasks Results ($N=650$)
+
+* **Cross-Task Benchmark Summary:**
+  * **NSINA Categories ($N=100$, 4-way News):** **83.0% Accuracy** | **0.823 Macro-F1** | **0.098 ECE** (Chance: 25.0%)
+  * **SinhalaMMLU ($N=150$, 4-option QA):** **73.3% Accuracy** | **0.736 Macro-F1** | **0.153 ECE** (Chance: 25.0%)
+  * **SalAngaBhava ($N=150$, 1–5 Stars):** **78.0% Exact Choice Accuracy** | **88.7% Noul High ($\ge 4$)** | **90.7% Noul Low ($\le 2$)**
+  * **SOLD ($N=150$, Binary Offensive):** **64.7% Accuracy (Choice & Noul)** | **0.640 Macro-F1** | **0.124 ECE** (Chance: 50.0%)
+  * **NSINA Media ($N=100$, 10-way Publisher):** **20.0% Accuracy** | **0.158 Macro-F1** | **0.070 ECE** (Chance: 10.0%)
+* **Key Insights:**
+  * `jev-latest` exhibits remarkable zero-shot comprehension in Sinhala academic QA (MMLU 73.3%) and news categorization (83.0%), outperforming chance baselines by nearly $3\times$.
+  * Risk-coverage curves show that filtering at $\tau \ge 0.90$ elevates accuracy across all tasks (e.g., SOLD reaches **94.3%**, MMLU **94.3%**, SalAngaBhava **97.0%**, and NSINA Media **100.0%**).
+* **Full Report:** [`results/stage4_core/summary.md`](results/stage4_core/summary.md) | [`core_tasks_report.json`](results/stage4_core/core_tasks_report.json)
 
 ---
 

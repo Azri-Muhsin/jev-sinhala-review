@@ -1,0 +1,729 @@
+{
+  "experiment_id": "exp_stage4_core_sinhala",
+  "phase": "phase_1_full",
+  "timestamp": "2026-10-03T11:50:40.698221+00:00",
+  "model": "jev-latest",
+  "total_examples": 650,
+  "total_records_logged": 1500,
+  "tasks": {
+    "dataset_b_sold": {
+      "choice": {
+        "accuracy": 0.6467,
+        "macro_f1": 0.6396,
+        "weighted_f1": 0.649,
+        "total_evaluated": 150,
+        "per_class": {
+          "NOT": {
+            "precision": 0.7195,
+            "recall": 0.6629,
+            "f1": 0.6901,
+            "support": 89
+          },
+          "OFF": {
+            "precision": 0.5588,
+            "recall": 0.623,
+            "f1": 0.5891,
+            "support": 61
+          }
+        },
+        "confusion_matrix": [
+          [
+            59,
+            30
+          ],
+          [
+            23,
+            38
+          ]
+        ],
+        "labels": [
+          "NOT",
+          "OFF"
+        ],
+        "ece": 0.1245,
+        "risk_coverage": [
+          {
+            "threshold": 0.5,
+            "coverage": 0.6467,
+            "retained_count": 97,
+            "total_count": 150,
+            "accuracy": 0.7629,
+            "risk": 0.2371
+          },
+          {
+            "threshold": 0.7,
+            "coverage": 0.4733,
+            "retained_count": 71,
+            "total_count": 150,
+            "accuracy": 0.8451,
+            "risk": 0.1549
+          },
+          {
+            "threshold": 0.8,
+            "coverage": 0.38,
+            "retained_count": 57,
+            "total_count": 150,
+            "accuracy": 0.8596,
+            "risk": 0.1404
+          },
+          {
+            "threshold": 0.9,
+            "coverage": 0.2333,
+            "retained_count": 35,
+            "total_count": 150,
+            "accuracy": 0.9429,
+            "risk": 0.0571
+          },
+          {
+            "threshold": 0.95,
+            "coverage": 0.14,
+            "retained_count": 21,
+            "total_count": 150,
+            "accuracy": 1.0,
+            "risk": 0.0
+          }
+        ]
+      },
+      "noul": {
+        "accuracy": 0.6467,
+        "macro_f1": 0.6421,
+        "weighted_f1": 0.6496,
+        "total_evaluated": 150,
+        "per_class": {
+          "NOT": {
+            "precision": 0.7308,
+            "recall": 0.6404,
+            "f1": 0.6826,
+            "support": 89
+          },
+          "OFF": {
+            "precision": 0.5556,
+            "recall": 0.6557,
+            "f1": 0.6015,
+            "support": 61
+          }
+        },
+        "confusion_matrix": [
+          [
+            57,
+            32
+          ],
+          [
+            21,
+            40
+          ]
+        ],
+        "labels": [
+          "NOT",
+          "OFF"
+        ],
+        "ece": 0.1205
+      }
+    },
+    "dataset_c1_nsina_categories": {
+      "choice": {
+        "accuracy": 0.83,
+        "macro_f1": 0.8227,
+        "weighted_f1": 0.8242,
+        "total_evaluated": 100,
+        "per_class": {
+          "Business": {
+            "precision": 0.7895,
+            "recall": 0.6522,
+            "f1": 0.7143,
+            "support": 23
+          },
+          "International News": {
+            "precision": 0.8125,
+            "recall": 1.0,
+            "f1": 0.8966,
+            "support": 26
+          },
+          "Local News": {
+            "precision": 0.7083,
+            "recall": 0.6538,
+            "f1": 0.68,
+            "support": 26
+          },
+          "Sports": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 25
+          }
+        },
+        "confusion_matrix": [
+          [
+            15,
+            1,
+            7,
+            0
+          ],
+          [
+            0,
+            26,
+            0,
+            0
+          ],
+          [
+            4,
+            5,
+            17,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            25
+          ]
+        ],
+        "labels": [
+          "Business",
+          "International News",
+          "Local News",
+          "Sports"
+        ],
+        "ece": 0.0977,
+        "risk_coverage": [
+          {
+            "threshold": 0.5,
+            "coverage": 0.96,
+            "retained_count": 96,
+            "total_count": 100,
+            "accuracy": 0.8438,
+            "risk": 0.1562
+          },
+          {
+            "threshold": 0.7,
+            "coverage": 0.87,
+            "retained_count": 87,
+            "total_count": 100,
+            "accuracy": 0.8966,
+            "risk": 0.1034
+          },
+          {
+            "threshold": 0.8,
+            "coverage": 0.84,
+            "retained_count": 84,
+            "total_count": 100,
+            "accuracy": 0.9048,
+            "risk": 0.0952
+          },
+          {
+            "threshold": 0.9,
+            "coverage": 0.74,
+            "retained_count": 74,
+            "total_count": 100,
+            "accuracy": 0.9189,
+            "risk": 0.0811
+          },
+          {
+            "threshold": 0.95,
+            "coverage": 0.71,
+            "retained_count": 71,
+            "total_count": 100,
+            "accuracy": 0.9296,
+            "risk": 0.0704
+          }
+        ]
+      }
+    },
+    "dataset_c2_nsina_media": {
+      "choice": {
+        "accuracy": 0.2,
+        "macro_f1": 0.1577,
+        "weighted_f1": 0.1735,
+        "total_evaluated": 100,
+        "per_class": {
+          "Adaderana": {
+            "precision": 0.2143,
+            "recall": 0.2727,
+            "f1": 0.24,
+            "support": 11
+          },
+          "ITN news": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 11
+          },
+          "Lankatruth": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 11
+          },
+          "Siyatha News": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 4
+          },
+          "dinamina": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 8
+          },
+          "divaina": {
+            "precision": 0.2857,
+            "recall": 0.1818,
+            "f1": 0.2222,
+            "support": 11
+          },
+          "hirunews": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 11
+          },
+          "https://sinhala.news.lk": {
+            "precision": 0.1094,
+            "recall": 0.6364,
+            "f1": 0.1867,
+            "support": 11
+          },
+          "www.lankadeepa.lk": {
+            "precision": 0.2857,
+            "recall": 0.1818,
+            "f1": 0.2222,
+            "support": 11
+          },
+          "www.vikalpa.org": {
+            "precision": 1.0,
+            "recall": 0.5455,
+            "f1": 0.7059,
+            "support": 11
+          }
+        },
+        "confusion_matrix": [
+          [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            8,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            8,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            11,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            0,
+            3,
+            2,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            2,
+            0,
+            6,
+            1,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            2,
+            1,
+            7,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7,
+            2,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            1,
+            6
+          ]
+        ],
+        "labels": [
+          "Adaderana",
+          "ITN news",
+          "Lankatruth",
+          "Siyatha News",
+          "dinamina",
+          "divaina",
+          "hirunews",
+          "https://sinhala.news.lk",
+          "www.lankadeepa.lk",
+          "www.vikalpa.org"
+        ],
+        "ece": 0.07,
+        "risk_coverage": [
+          {
+            "threshold": 0.5,
+            "coverage": 0.08,
+            "retained_count": 8,
+            "total_count": 100,
+            "accuracy": 0.875,
+            "risk": 0.125
+          },
+          {
+            "threshold": 0.7,
+            "coverage": 0.07,
+            "retained_count": 7,
+            "total_count": 100,
+            "accuracy": 1.0,
+            "risk": 0.0
+          },
+          {
+            "threshold": 0.8,
+            "coverage": 0.06,
+            "retained_count": 6,
+            "total_count": 100,
+            "accuracy": 1.0,
+            "risk": 0.0
+          },
+          {
+            "threshold": 0.9,
+            "coverage": 0.05,
+            "retained_count": 5,
+            "total_count": 100,
+            "accuracy": 1.0,
+            "risk": 0.0
+          },
+          {
+            "threshold": 0.95,
+            "coverage": 0.04,
+            "retained_count": 4,
+            "total_count": 100,
+            "accuracy": 1.0,
+            "risk": 0.0
+          }
+        ]
+      }
+    },
+    "dataset_d_sinhalammlu": {
+      "choice": {
+        "accuracy": 0.7333,
+        "macro_f1": 0.7363,
+        "weighted_f1": 0.7339,
+        "total_evaluated": 150,
+        "per_class": {
+          "A": {
+            "precision": 0.6923,
+            "recall": 0.7105,
+            "f1": 0.7013,
+            "support": 38
+          },
+          "B": {
+            "precision": 0.7174,
+            "recall": 0.8049,
+            "f1": 0.7586,
+            "support": 41
+          },
+          "C": {
+            "precision": 0.7073,
+            "recall": 0.7073,
+            "f1": 0.7073,
+            "support": 41
+          },
+          "D": {
+            "precision": 0.875,
+            "recall": 0.7,
+            "f1": 0.7778,
+            "support": 30
+          }
+        },
+        "confusion_matrix": [
+          [
+            27,
+            5,
+            5,
+            1
+          ],
+          [
+            2,
+            33,
+            6,
+            0
+          ],
+          [
+            7,
+            3,
+            29,
+            2
+          ],
+          [
+            3,
+            5,
+            1,
+            21
+          ]
+        ],
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "ece": 0.1531,
+        "risk_coverage": [
+          {
+            "threshold": 0.5,
+            "coverage": 0.5733,
+            "retained_count": 86,
+            "total_count": 150,
+            "accuracy": 0.9186,
+            "risk": 0.0814
+          },
+          {
+            "threshold": 0.7,
+            "coverage": 0.5,
+            "retained_count": 75,
+            "total_count": 150,
+            "accuracy": 0.9333,
+            "risk": 0.0667
+          },
+          {
+            "threshold": 0.8,
+            "coverage": 0.4333,
+            "retained_count": 65,
+            "total_count": 150,
+            "accuracy": 0.9538,
+            "risk": 0.0462
+          },
+          {
+            "threshold": 0.9,
+            "coverage": 0.3533,
+            "retained_count": 53,
+            "total_count": 150,
+            "accuracy": 0.9434,
+            "risk": 0.0566
+          },
+          {
+            "threshold": 0.95,
+            "coverage": 0.28,
+            "retained_count": 42,
+            "total_count": 150,
+            "accuracy": 0.9286,
+            "risk": 0.0714
+          }
+        ]
+      }
+    },
+    "dataset_e_salangabhava": {
+      "choice": {
+        "accuracy": 0.78,
+        "macro_f1": 0.3445,
+        "weighted_f1": 0.8064,
+        "total_evaluated": 150,
+        "per_class": {
+          "1": {
+            "precision": 0.4286,
+            "recall": 0.6667,
+            "f1": 0.5217,
+            "support": 9
+          },
+          "2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "3": {
+            "precision": 0.0909,
+            "recall": 0.25,
+            "f1": 0.1333,
+            "support": 4
+          },
+          "4": {
+            "precision": 0.25,
+            "recall": 0.125,
+            "f1": 0.1667,
+            "support": 8
+          },
+          "5": {
+            "precision": 0.9478,
+            "recall": 0.8583,
+            "f1": 0.9008,
+            "support": 127
+          }
+        },
+        "confusion_matrix": [
+          [
+            6,
+            2,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            2,
+            1,
+            0,
+            1
+          ],
+          [
+            2,
+            0,
+            1,
+            1,
+            4
+          ],
+          [
+            5,
+            2,
+            8,
+            3,
+            109
+          ]
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "ece": 0.1913,
+        "risk_coverage": [
+          {
+            "threshold": 0.5,
+            "coverage": 0.62,
+            "retained_count": 93,
+            "total_count": 150,
+            "accuracy": 0.8925,
+            "risk": 0.1075
+          },
+          {
+            "threshold": 0.7,
+            "coverage": 0.4467,
+            "retained_count": 67,
+            "total_count": 150,
+            "accuracy": 0.8955,
+            "risk": 0.1045
+          },
+          {
+            "threshold": 0.8,
+            "coverage": 0.3533,
+            "retained_count": 53,
+            "total_count": 150,
+            "accuracy": 0.9057,
+            "risk": 0.0943
+          },
+          {
+            "threshold": 0.9,
+            "coverage": 0.22,
+            "retained_count": 33,
+            "total_count": 150,
+            "accuracy": 0.9697,
+            "risk": 0.0303
+          },
+          {
+            "threshold": 0.95,
+            "coverage": 0.1667,
+            "retained_count": 25,
+            "total_count": 150,
+            "accuracy": 0.96,
+            "risk": 0.04
+          }
+        ]
+      },
+      "score": {
+        "mae": 1.0539,
+        "rounded_accuracy": 0.3133,
+        "total_evaluated": 150
+      },
+      "noul_high_accuracy": 0.8867,
+      "noul_low_accuracy": 0.9067
+    }
+  },
+  "telemetry": {
+    "latency_p50_ms": 304.5,
+    "latency_p95_ms": 437.6,
+    "latency_p99_ms": 541.2,
+    "latency_mean_ms": 327.8
+  }
+}

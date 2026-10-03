@@ -45,6 +45,7 @@ results/**/*.jsonl
 !results/**/summary.md
 !results/**/gate_verification_report.json
 !results/**/primitive_consistency_report.json
+!results/**/core_tasks_report.json
 
 # Lock files (managed by uv)
 # uv.lock  # Keep tracked for reproducibility
