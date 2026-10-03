@@ -1,0 +1,237 @@
+{
+  "experiment_id": "exp_stage5_prompt_sensitivity",
+  "timestamp": "2026-10-03T12:09:36.089619+00:00",
+  "model": "jev-latest",
+  "sentiment": {
+    "sample_size": 50,
+    "choice_sensitivity": {
+      "sample_size": 50,
+      "labels": [
+        "POSITIVE",
+        "NEGATIVE",
+        "NEUTRAL",
+        "CONFLICT"
+      ],
+      "accuracy": {
+        "english": 0.6,
+        "sinhala": 0.6,
+        "delta": 0.0
+      },
+      "macro_f1": {
+        "english": 0.4681,
+        "sinhala": 0.4682,
+        "delta": 0.0001
+      },
+      "agreement": {
+        "agreement_count": 45,
+        "agreement_rate": 0.9,
+        "flip_count": 5,
+        "flip_rate": 0.1,
+        "flip_transitions": {
+          "NEUTRAL -> NEGATIVE": 1,
+          "NEGATIVE -> CONFLICT": 2,
+          "NEGATIVE -> POSITIVE": 1,
+          "CONFLICT -> NEGATIVE": 1
+        }
+      },
+      "confidence": {
+        "mean_english": 0.746,
+        "mean_sinhala": 0.7138,
+        "delta": -0.0322,
+        "pearson_r": 0.9517,
+        "pearson_p": 0.0
+      },
+      "probability_alignment": {
+        "mean_absolute_difference": 0.0269,
+        "mean_cosine_similarity": 0.9912
+      }
+    },
+    "noul_sensitivity": {
+      "sample_size": 50,
+      "labels": [
+        "POSITIVE",
+        "NEGATIVE",
+        "NEUTRAL",
+        "CONFLICT"
+      ],
+      "accuracy": {
+        "english": 0.62,
+        "sinhala": 0.54,
+        "delta": -0.08
+      },
+      "macro_f1": {
+        "english": 0.4819,
+        "sinhala": 0.4231,
+        "delta": -0.0588
+      },
+      "agreement": {
+        "agreement_count": 43,
+        "agreement_rate": 0.86,
+        "flip_count": 7,
+        "flip_rate": 0.14,
+        "flip_transitions": {
+          "NEUTRAL -> POSITIVE": 2,
+          "POSITIVE -> CONFLICT": 2,
+          "NEGATIVE -> CONFLICT": 2,
+          "CONFLICT -> NEGATIVE": 1
+        }
+      },
+      "confidence": {
+        "mean_english": 0.814,
+        "mean_sinhala": 0.7906,
+        "delta": -0.0234,
+        "pearson_r": 0.8394,
+        "pearson_p": 0.0
+      },
+      "probability_alignment": {
+        "mean_absolute_difference": 0.0847,
+        "mean_cosine_similarity": 0.9735
+      }
+    },
+    "metrics": {
+      "choice_en": {
+        "accuracy": 0.6,
+        "macro_f1": 0.4681,
+        "ece": 0.2272,
+        "brier": 0.5852,
+        "nll": 3.0717,
+        "mean_confidence": 0.746
+      },
+      "choice_si": {
+        "accuracy": 0.6,
+        "macro_f1": 0.4682,
+        "ece": 0.1634,
+        "brier": 0.5866,
+        "nll": 3.0466,
+        "mean_confidence": 0.7138
+      },
+      "noul_en": {
+        "accuracy": 0.62,
+        "macro_f1": 0.4819,
+        "ece": 0.208,
+        "brier": 0.8441,
+        "nll": 0.8703,
+        "mean_confidence": 0.814
+      },
+      "noul_si": {
+        "accuracy": 0.54,
+        "macro_f1": 0.4231,
+        "ece": 0.2626,
+        "brier": 0.943,
+        "nll": 0.7064,
+        "mean_confidence": 0.7906
+      }
+    }
+  },
+  "sold": {
+    "sample_size": 50,
+    "choice_sensitivity": {
+      "sample_size": 50,
+      "labels": [
+        "NOT",
+        "OFF"
+      ],
+      "accuracy": {
+        "english": 0.7,
+        "sinhala": 0.68,
+        "delta": -0.02
+      },
+      "macro_f1": {
+        "english": 0.697,
+        "sinhala": 0.6779,
+        "delta": -0.019
+      },
+      "agreement": {
+        "agreement_count": 49,
+        "agreement_rate": 0.98,
+        "flip_count": 1,
+        "flip_rate": 0.02,
+        "flip_transitions": {
+          "NOT -> OFF": 1
+        }
+      },
+      "confidence": {
+        "mean_english": 0.581,
+        "mean_sinhala": 0.5974,
+        "delta": 0.0164,
+        "pearson_r": 0.9532,
+        "pearson_p": 0.0
+      },
+      "probability_alignment": {
+        "mean_absolute_difference": 0.0372,
+        "mean_cosine_similarity": 0.9963
+      }
+    },
+    "noul_sensitivity": {
+      "sample_size": 50,
+      "labels": [
+        "NOT",
+        "OFF"
+      ],
+      "accuracy": {
+        "english": 0.68,
+        "sinhala": 0.64,
+        "delta": -0.04
+      },
+      "macro_f1": {
+        "english": 0.68,
+        "sinhala": 0.6305,
+        "delta": -0.0495
+      },
+      "agreement": {
+        "agreement_count": 42,
+        "agreement_rate": 0.84,
+        "flip_count": 8,
+        "flip_rate": 0.16,
+        "flip_transitions": {
+          "OFF -> NOT": 8
+        }
+      },
+      "confidence": {
+        "mean_english": 0.74,
+        "mean_sinhala": 0.7396,
+        "delta": -0.0004,
+        "pearson_r": 0.679,
+        "pearson_p": 0.0
+      },
+      "probability_alignment": {
+        "mean_absolute_difference": 0.08,
+        "mean_cosine_similarity": 0.9815
+      }
+    },
+    "metrics": {
+      "choice_en": {
+        "accuracy": 0.7,
+        "macro_f1": 0.697,
+        "ece": 0.1858,
+        "brier": 0.3765,
+        "nll": 0.5437,
+        "mean_confidence": 0.581
+      },
+      "choice_si": {
+        "accuracy": 0.68,
+        "macro_f1": 0.6779,
+        "ece": 0.141,
+        "brier": 0.393,
+        "nll": 0.5662,
+        "mean_confidence": 0.5974
+      },
+      "noul_en": {
+        "accuracy": 0.68,
+        "macro_f1": 0.68,
+        "ece": 0.1016,
+        "brier": 0.3982,
+        "nll": 0.577,
+        "mean_confidence": 0.74
+      },
+      "noul_si": {
+        "accuracy": 0.64,
+        "macro_f1": 0.6305,
+        "ece": 0.1256,
+        "brier": 0.4097,
+        "nll": 0.5884,
+        "mean_confidence": 0.7396
+      }
+    }
+  }
+}

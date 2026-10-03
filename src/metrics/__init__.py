@@ -10,6 +10,7 @@ from src.metrics.calibration import (
     compute_selective_risk_coverage,
 )
 from src.metrics.consistency import compute_sentiment_primitive_consistency
+from src.metrics.sensitivity import compute_prompt_sensitivity
 
 __all__ = [
     "compute_classification_metrics",
@@ -18,4 +19,5 @@ __all__ = [
     "compute_nll",
     "compute_selective_risk_coverage",
     "compute_sentiment_primitive_consistency",
+    "compute_prompt_sensitivity",
 ]

@@ -251,6 +251,23 @@ def stage4_core_tasks() -> bool:
         runner.close()
 
 
+def stage5_prompt_sensitivity() -> bool:
+    """Stage 5: Language & Prompt Sensitivity Experiment (RQ4, N=100 total).
+
+    Evaluates English vs. native Sinhala instructions on identical input states:
+      - 50 items from Dataset A (Sentiment)
+      - 50 items from Dataset B (SOLD)
+    """
+    from src.runners.runner_stage5_prompt_sensitivity import PromptSensitivityRunner
+
+    runner = PromptSensitivityRunner()
+    try:
+        report = runner.run()
+        return bool(report.get("sentiment") and report.get("sold"))
+    finally:
+        runner.close()
+
+
 def main() -> None:
     """Run the requested probe stage."""
     import argparse
@@ -261,9 +278,9 @@ def main() -> None:
     parser.add_argument(
         "--stage",
         type=int,
-        choices=[0, 1, 2, 3, 4],
+        choices=[0, 1, 2, 3, 4, 5],
         default=None,
-        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), or 4 (Core Pure-Sinhala Tasks)",
+        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), 4 (Core Tasks), 5 (Prompt Sensitivity)",
     )
     args = parser.parse_args()
 
@@ -279,8 +296,10 @@ def main() -> None:
         success = stage3_sentiment_equivalence()
     elif args.stage == 4:
         success = stage4_core_tasks()
+    elif args.stage == 5:
+        success = stage5_prompt_sensitivity()
     else:
-        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3 -> Stage 4
+        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3 -> Stage 4 -> Stage 5
         s0 = stage0_health_check()
         if not s0:
             sys.exit(1)
@@ -293,7 +312,10 @@ def main() -> None:
         s3 = stage3_sentiment_equivalence()
         if not s3:
             sys.exit(1)
-        success = stage4_core_tasks()
+        s4 = stage4_core_tasks()
+        if not s4:
+            sys.exit(1)
+        success = stage5_prompt_sensitivity()
 
     sys.exit(0 if success else 1)
 

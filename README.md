@@ -122,7 +122,8 @@ Stage 3: Sentiment Primitive Equivalence Lab (N=150) ─────────
 Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [✓ COMPLETED]
    │     (650 examples, MMLU: 73.3%, NSINA Cat: 83.0%, SalAnga: 78.0%, SOLD: 64.7%)
    │
-Stage 5: Language & Prompt Sensitivity (English vs. Sinhala) ──► [PENDING]
+Stage 5: Language & Prompt Sensitivity (English vs. Sinhala) ──► [✓ COMPLETED]
+   │     (Choice parity: Δ Acc=0.000, 98% SOLD agreement, Cosine Sim >= 0.974)
    │
 Stage 6: Robustness & Diagnostics (Order, Repeatability, ECE) ──► [PENDING]
    │
@@ -167,6 +168,24 @@ Stage 8: Quantitative Synthesis & Final Report ───────────
   * Risk-coverage curves show that filtering at $\tau \ge 0.90$ elevates accuracy across all tasks (e.g., SOLD reaches **94.3%**, MMLU **94.3%**, SalAngaBhava **97.0%**, and NSINA Media **100.0%**).
 * **Full Report:** [`results/stage4_core/summary.md`](results/stage4_core/summary.md) | [`core_tasks_report.json`](results/stage4_core/core_tasks_report.json)
 
+### Stage 5 Language & Prompt Sensitivity Experiment Results (RQ4, $N=100$)
+
+Evaluates whether framing instructions in **English** vs. **native Sinhala** alters `jev-latest`'s performance, confidence, or decision boundaries on identical input texts (50 from Dataset A Sentiment, 50 from Dataset B SOLD):
+
+| Task / Primitive | Acc (EN) | Acc (SI) | Δ Acc | Macro-F1 (EN) | Macro-F1 (SI) | Δ F1 | Agreement | Flip Rate | Conf Drift (SI - EN) | Prob MAD | Cosine Sim |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Sentiment (Choice 4-way)** | 0.600 | 0.600 | **+0.000** | 0.468 | 0.468 | **+0.000** | **90.0%** | 10.0% | -0.032 | 0.0269 | **0.9912** |
+| **Sentiment (Noul 4-way)** | 0.620 | 0.540 | -0.080 | 0.482 | 0.423 | -0.059 | **86.0%** | 14.0% | -0.023 | 0.0847 | **0.9735** |
+| **SOLD (Choice Binary)** | 0.700 | 0.680 | -0.020 | 0.697 | 0.678 | -0.019 | **98.0%** | 2.0% | +0.016 | 0.0372 | **0.9963** |
+| **SOLD (Noul Binary)** | 0.680 | 0.640 | -0.040 | 0.680 | 0.630 | -0.050 | **84.0%** | 16.0% | -0.000 | 0.0800 | **0.9815** |
+
+* **Key Takeaways for RQ4:**
+  1. **Extreme Cross-Lingual Choice Stability:** Choice primitives demonstrate near-complete representation invariance between English and Sinhala instructions (Cosine Similarity $\ge 0.991$, MAD $\le 0.037$, Pearson $r \ge 0.952$). For SOLD Choice, **98.0% of decisions were identical** (only 1 flip out of 50).
+  2. **Zero Performance Penalty on Sentiment Choice:** In 4-way Sentiment, switching from English to native Sinhala yielded exactly identical accuracy ($60.0\%$) and Macro-F1 ($0.468$).
+  3. **Calibration Improvement in Native Sinhala:** Native Sinhala instructions improved calibration for Choice tasks: ECE decreased from **0.227 to 0.163** on Sentiment Choice, and from **0.186 to 0.141** on SOLD Choice.
+  4. **Noul Conservative Threshold Shift:** On SOLD Noul, all 8 flips were $\text{OFF} \to \text{NOT}$. When questioned in Sinhala (`"මෙම පළ කිරීම අපහාසාත්මක එකක්ද?"`), the model adopted a slightly stricter evidentiary threshold for offensiveness on borderline cases.
+* **Full Report:** [`results/stage5_prompt_sensitivity/summary.md`](results/stage5_prompt_sensitivity/summary.md) | [`prompt_sensitivity_report.json`](results/stage5_prompt_sensitivity/prompt_sensitivity_report.json)
+
 ---
 
 ## 6. Project Layout
@@ -191,12 +210,14 @@ jev-sintam-review/
 │   │   ├── base_runner.py         # Abstract base runner with Section 5 record logging
 │   │   ├── runner_smoke_test.py   # Stage 2 smoke test runner & gate verifier
 │   │   ├── runner_stage3_sentiment.py # Stage 3 Sentiment Primitive Equivalence
-│   │   └── runner_stage4_core.py      # Stage 4 Core Pure-Sinhala Tasks Runner
-│   └── metrics/                   # Classification, calibration, consistency metrics
+│   │   ├── runner_stage4_core.py      # Stage 4 Core Pure-Sinhala Tasks Runner
+│   │   └── runner_stage5_prompt_sensitivity.py # Stage 5 Language & Prompt Sensitivity
+│   └── metrics/                   # Classification, calibration, consistency, sensitivity
 ├── results/
 │   ├── smoke_test/                # Gate verification report & smoke predictions
 │   ├── stage3_sentiment/          # Stage 3 logs, consistency matrices, and tables
 │   ├── stage4_core/               # Stage 4 logs, task accuracy, and calibration reports
+│   ├── stage5_prompt_sensitivity/ # Stage 5 paired EN vs SI sensitivity reports
 │   └── figures/                   # Generated evaluation plots and diagrams
 ├── tests/
 │   ├── test_loaders.py            # Unit tests for data loaders & ZWJ preservation
@@ -232,6 +253,7 @@ pytest tests/
 python main.py --stage 0   # SDK & Environment Health Check
 python main.py --stage 1   # Data Ingestion & Deterministic Sampling
 python main.py --stage 2   # Phase 0 Smoke Test & Gate Verification
-python main.py --stage 3   # Stage 3: Sentiment Primitive Equivalence Lab
+python main.py --stage 3   # Stage 3: Sentiment Primitive Equivalence Lab (N=150)
 python main.py --stage 4   # Stage 4: Core Pure-Sinhala Tasks (N=650)
+python main.py --stage 5   # Stage 5: Language & Prompt Sensitivity Experiment (N=100)
 ```
