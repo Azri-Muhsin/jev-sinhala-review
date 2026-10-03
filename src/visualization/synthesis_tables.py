@@ -523,5 +523,9 @@ def run_synthesis() -> dict[str, Any]:
     }
 
 
+# Convenient alias
+generate_all_synthesis_tables = run_synthesis
+
+
 if __name__ == "__main__":
     run_synthesis()
