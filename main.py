@@ -15,10 +15,11 @@ import io
 import os
 
 # Force UTF-8 on Windows console
-if os.name == "nt":
-    import sys as _sys
-    _sys.stdout = io.TextIOWrapper(_sys.stdout.buffer, encoding="utf-8", errors="replace")
-    _sys.stderr = io.TextIOWrapper(_sys.stderr.buffer, encoding="utf-8", errors="replace")
+if sys.platform == "win32":
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from src.config import (
     ExperimentConfig,
@@ -219,6 +220,21 @@ def stage2_smoke_test() -> bool:
         runner.close()
 
 
+def stage3_sentiment_equivalence() -> bool:
+    """Stage 3: Sentiment Primitive Equivalence Lab (Phase 1 Full Probe, N=150).
+
+    Tests RQ2 (Primitive Consistency) across Choice, Noul, and Score.
+    """
+    from src.runners.runner_stage3_sentiment import SentimentPrimitiveEquivalenceRunner
+
+    runner = SentimentPrimitiveEquivalenceRunner()
+    try:
+        report = runner.run()
+        return report.get("sample_size", 0) > 0
+    finally:
+        runner.close()
+
+
 def main() -> None:
     """Run the requested probe stage."""
     import argparse
@@ -229,9 +245,9 @@ def main() -> None:
     parser.add_argument(
         "--stage",
         type=int,
-        choices=[0, 1, 2],
+        choices=[0, 1, 2, 3],
         default=None,
-        help="Stage to execute: 0 (Health Check), 1 (Data & Sampling), or 2 (Phase 0 Smoke Test)",
+        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), or 3 (Sentiment Primitive Equivalence)",
     )
     args = parser.parse_args()
 
@@ -243,15 +259,20 @@ def main() -> None:
         success = stage1_data_acquisition()
     elif args.stage == 2:
         success = stage2_smoke_test()
+    elif args.stage == 3:
+        success = stage3_sentiment_equivalence()
     else:
-        # Default run: Stage 0 -> Stage 1 -> Stage 2
+        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3
         s0 = stage0_health_check()
         if not s0:
             sys.exit(1)
         s1 = stage1_data_acquisition()
         if not s1:
             sys.exit(1)
-        success = stage2_smoke_test()
+        s2 = stage2_smoke_test()
+        if not s2:
+            sys.exit(1)
+        success = stage3_sentiment_equivalence()
 
     sys.exit(0 if success else 1)
 

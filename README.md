@@ -116,9 +116,11 @@ Stage 1: Data Ingestion, Splits & Stratified Sampling Engine ──► [✓ COMP
 Stage 2: Phase 0 Smoke Test (20 items/task end-to-end) ────────► [✓ PASSED GATE]
    │     (320 decisions logged, 0 runtime errors, 100% checks passed)
    │
-Stage 3: Sentiment Primitive Equivalence Lab (N=150) ──────────► [IN PROGRESS]
+Stage 3: Sentiment Primitive Equivalence Lab (N=150) ──────────► [✓ COMPLETED]
+   │     (89.3% Argmax agreement, Choice 60.7% vs Noul 56.7%, Score rho=0.899)
    │
-Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [PENDING]
+Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [IN PROGRESS]
+   │     (Phase 1 full probe, N=650 items across 5 tasks)
    │
 Stage 5: Language & Prompt Sensitivity (English vs. Sinhala) ──► [PENDING]
    │
@@ -137,6 +139,20 @@ Stage 8: Quantitative Synthesis & Final Report ───────────
 * **Latency Profile:** $p_{50} = 305.2\text{ ms}$, $p_{95} = 408.0\text{ ms}$, mean $= 329.7\text{ ms}$
 * **Unicode / ZWJ Integrity:** 109 ZWJ (`\u200D`) characters verified intact
 * **Full Report:** [`results/smoke_test/summary.md`](results/smoke_test/summary.md) | [`gate_verification_report.json`](results/smoke_test/gate_verification_report.json)
+
+### Stage 3 Sentiment Primitive Equivalence Lab Results ($N=150$)
+
+* **Classification Performance:**
+  * `Choice` (4-way Categorical): **60.7% Accuracy** | **0.461 Macro-F1** | **0.132 ECE** | **0.561 Brier Score**
+  * `Noul` (4-way Argmax): **56.7% Accuracy** | **0.445 Macro-F1** | **0.230 ECE** | **0.825 Brier Score**
+* **RQ2 Primitive Consistency Findings:**
+  * **Argmax Agreement:** **89.3%** (134/150 examples produced the identical winner between `Choice` and `Noul`).
+  * **Multi-Belief Contradiction Rate:** **44.7%** (67 items asserted $P \ge 0.50$ for $\ge 2$ mutually exclusive classes).
+  * **Zero-Belief Rate:** **2.7%** (4 items with no class asserting $\ge 0.50$).
+  * **Probability Alignment:** Pearson $r \ge 0.935$ and Spearman $\rho \ge 0.920$ across all primary sentiment classes.
+  * **Score vs. Choice Ordinal Alignment:** Continuous Score expectation $\mathbb{E}[S]$ correlates strongly with Choice ($\mathbf{\rho = 0.899}$, $p < 0.0001$, $\text{MAE} = 0.224$).
+* **Risk-Coverage:** Confidence thresholding effectively filters errors, scaling accuracy from **$60.7\%$** at baseline to **$86.0\%$** ($\tau \ge 0.90$, 38% coverage) and **$89.5\%$** ($\tau \ge 0.95$, 25% coverage).
+* **Full Report:** [`results/stage3_sentiment/summary.md`](results/stage3_sentiment/summary.md) | [`primitive_consistency_report.json`](results/stage3_sentiment/primitive_consistency_report.json)
 
 ---
 
@@ -161,14 +177,17 @@ jev-sintam-review/
 │   ├── runners/                   # Experiment runners
 │   │   ├── base_runner.py         # Abstract base runner with Section 5 record logging
 │   │   ├── runner_smoke_test.py   # Stage 2 smoke test runner & gate verifier
-│   │   └── runner_stage3_sentiment.py # Stage 3 Sentiment Primitive Equivalence
-│   └── evaluation/                # Metrics, calibration, and consistency engines
+│   │   ├── runner_stage3_sentiment.py # Stage 3 Sentiment Primitive Equivalence
+│   │   └── runner_stage4_core.py      # Stage 4 Core Pure-Sinhala Tasks Runner
+│   └── metrics/                   # Classification, calibration, consistency metrics
 ├── results/
 │   ├── smoke_test/                # Gate verification report & smoke predictions
 │   ├── stage3_sentiment/          # Stage 3 logs, consistency matrices, and tables
+│   ├── stage4_core/               # Stage 4 logs, task accuracy, and calibration reports
 │   └── figures/                   # Generated evaluation plots and diagrams
 ├── tests/
 │   ├── test_loaders.py            # Unit tests for data loaders & ZWJ preservation
+│   ├── test_metrics.py            # Unit tests for evaluation metrics suite
 │   └── test_sdk_connection.py     # Health checks for TypeSafe SDK primitives
 ├── main.py                        # CLI entrypoint for stage-by-stage execution
 └── pyproject.toml                 # uv project configuration
@@ -201,4 +220,5 @@ python main.py --stage 0   # SDK & Environment Health Check
 python main.py --stage 1   # Data Ingestion & Deterministic Sampling
 python main.py --stage 2   # Phase 0 Smoke Test & Gate Verification
 python main.py --stage 3   # Stage 3: Sentiment Primitive Equivalence Lab
+python main.py --stage 4   # Stage 4: Core Pure-Sinhala Tasks (N=650)
 ```
