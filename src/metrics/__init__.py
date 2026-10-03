@@ -11,6 +11,11 @@ from src.metrics.calibration import (
 )
 from src.metrics.consistency import compute_sentiment_primitive_consistency
 from src.metrics.sensitivity import compute_prompt_sensitivity
+from src.metrics.diagnostics import (
+    compute_option_order_diagnostics,
+    compute_repeatability_diagnostics,
+    compute_shannon_entropy,
+)
 
 __all__ = [
     "compute_classification_metrics",
@@ -20,4 +25,7 @@ __all__ = [
     "compute_selective_risk_coverage",
     "compute_sentiment_primitive_consistency",
     "compute_prompt_sensitivity",
+    "compute_option_order_diagnostics",
+    "compute_repeatability_diagnostics",
+    "compute_shannon_entropy",
 ]

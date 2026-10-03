@@ -268,6 +268,39 @@ def stage5_prompt_sensitivity() -> bool:
         runner.close()
 
 
+def stage6_diagnostics() -> bool:
+    """Stage 6: Primitive Diagnostics & Robustness.
+
+      - Option-order permutation test (N=40 across MMLU & NSINA Categories)
+      - Repeatability & stochasticity test (N=100 over 3 independent passes)
+      - Aggregate selective risk-coverage curves (tau in [0.50..0.95])
+    """
+    from src.runners.runner_stage6_diagnostics import DiagnosticsRunner
+
+    runner = DiagnosticsRunner()
+    try:
+        report = runner.run()
+        return bool(report.get("option_order") and report.get("repeatability"))
+    finally:
+        runner.close()
+
+
+def stage7_cmcs_stress() -> bool:
+    """Stage 7: Code-Mixed Stress Track (Dataset F: CMCS, N=150).
+
+    Evaluates non-standard, Romanized, and code-mixed Sinhala-English text across
+    5 target sub-tasks: Sentiment, Humour, Hate Speech, Aspect Extraction, Script Analysis.
+    """
+    from src.runners.runner_stage7_cmcs import CMCSStressTrackRunner
+
+    runner = CMCSStressTrackRunner()
+    try:
+        report = runner.run()
+        return bool(report.get("sentiment_choice") and report.get("sample_size", 0) > 0)
+    finally:
+        runner.close()
+
+
 def main() -> None:
     """Run the requested probe stage."""
     import argparse
@@ -278,9 +311,9 @@ def main() -> None:
     parser.add_argument(
         "--stage",
         type=int,
-        choices=[0, 1, 2, 3, 4, 5],
+        choices=[0, 1, 2, 3, 4, 5, 6, 7],
         default=None,
-        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), 4 (Core Tasks), 5 (Prompt Sensitivity)",
+        help="Stage to execute: 0 (Health), 1 (Data), 2 (Smoke), 3 (Sentiment), 4 (Core Tasks), 5 (Sensitivity), 6 (Diagnostics), 7 (CMCS Stress)",
     )
     args = parser.parse_args()
 
@@ -298,8 +331,12 @@ def main() -> None:
         success = stage4_core_tasks()
     elif args.stage == 5:
         success = stage5_prompt_sensitivity()
+    elif args.stage == 6:
+        success = stage6_diagnostics()
+    elif args.stage == 7:
+        success = stage7_cmcs_stress()
     else:
-        # Default run: Stage 0 -> Stage 1 -> Stage 2 -> Stage 3 -> Stage 4 -> Stage 5
+        # Default run
         s0 = stage0_health_check()
         if not s0:
             sys.exit(1)
@@ -315,7 +352,13 @@ def main() -> None:
         s4 = stage4_core_tasks()
         if not s4:
             sys.exit(1)
-        success = stage5_prompt_sensitivity()
+        s5 = stage5_prompt_sensitivity()
+        if not s5:
+            sys.exit(1)
+        s6 = stage6_diagnostics()
+        if not s6:
+            sys.exit(1)
+        success = stage7_cmcs_stress()
 
     sys.exit(0 if success else 1)
 

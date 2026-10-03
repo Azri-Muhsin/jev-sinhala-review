@@ -1,0 +1,491 @@
+{
+  "experiment_id": "exp_stage6_diagnostics",
+  "timestamp": "2026-10-03T12:59:39.675704+00:00",
+  "model": "jev-latest",
+  "option_order": {
+    "total_examples": 40,
+    "overall_stability_rate": 0.9,
+    "nsina_categories": {
+      "sample_size": 20,
+      "stability_rate": 1.0,
+      "stable_count": 20,
+      "pairwise_flips": {
+        "orig_vs_shifted_rate": 0.0,
+        "orig_vs_shifted_count": 0,
+        "orig_vs_inverted_rate": 0.0,
+        "orig_vs_inverted_count": 0
+      },
+      "position_bias": {
+        "positions": [
+          "pos_0",
+          "pos_1",
+          "pos_2",
+          "pos_3"
+        ],
+        "counts_orig": [
+          6,
+          6,
+          2,
+          6
+        ],
+        "counts_shifted": [
+          6,
+          2,
+          6,
+          6
+        ],
+        "counts_inverted": [
+          6,
+          2,
+          6,
+          6
+        ],
+        "total_counts": [
+          18,
+          10,
+          14,
+          18
+        ],
+        "percentage_distribution": [
+          30.0,
+          16.67,
+          23.33,
+          30.0
+        ],
+        "chi2_statistic": 2.9333,
+        "chi2_p_value": 0.402018,
+        "significant_position_bias": false
+      },
+      "entropy": {
+        "mean_entropy_original": 0.1306,
+        "mean_entropy_shifted": 0.1735,
+        "mean_entropy_inverted": 0.1394,
+        "mean_delta_shifted": 0.0428,
+        "mean_delta_inverted": 0.0087
+      }
+    },
+    "sinhalammlu": {
+      "sample_size": 20,
+      "stability_rate": 0.8,
+      "stable_count": 16,
+      "pairwise_flips": {
+        "orig_vs_shifted_rate": 0.1,
+        "orig_vs_shifted_count": 2,
+        "orig_vs_inverted_rate": 0.15,
+        "orig_vs_inverted_count": 3
+      },
+      "position_bias": {
+        "positions": [
+          "pos_0",
+          "pos_1",
+          "pos_2",
+          "pos_3"
+        ],
+        "counts_orig": [
+          5,
+          5,
+          9,
+          1
+        ],
+        "counts_shifted": [
+          4,
+          9,
+          2,
+          5
+        ],
+        "counts_inverted": [
+          2,
+          8,
+          7,
+          3
+        ],
+        "total_counts": [
+          11,
+          22,
+          18,
+          9
+        ],
+        "percentage_distribution": [
+          18.33,
+          36.67,
+          30.0,
+          15.0
+        ],
+        "chi2_statistic": 7.3333,
+        "chi2_p_value": 0.061999,
+        "significant_position_bias": false
+      },
+      "entropy": {
+        "mean_entropy_original": 1.4254,
+        "mean_entropy_shifted": 1.4361,
+        "mean_entropy_inverted": 1.4281,
+        "mean_delta_shifted": 0.0107,
+        "mean_delta_inverted": 0.0027
+      }
+    }
+  },
+  "repeatability": {
+    "num_runs": 3,
+    "sample_size": 100,
+    "choice_repeatability": {
+      "num_runs": 3,
+      "sample_size": 100,
+      "exact_repeatability_rate": 0.94,
+      "exact_repeat_count": 94,
+      "divergent_count": 6,
+      "confidence_stochasticity": {
+        "mean_std_confidence": 0.020589,
+        "max_confidence_drift": 0.19,
+        "is_strictly_deterministic": false
+      }
+    },
+    "noul_repeatability": {
+      "num_runs": 3,
+      "sample_size": 100,
+      "exact_repeatability_rate": 1.0,
+      "exact_repeat_count": 100,
+      "divergent_count": 0,
+      "confidence_stochasticity": {
+        "mean_std_confidence": 0.009342,
+        "max_confidence_drift": 0.11,
+        "is_strictly_deterministic": false
+      }
+    },
+    "score_repeatability": {
+      "num_runs": 3,
+      "sample_size": 100,
+      "exact_repeatability_rate": 0.15,
+      "exact_repeat_count": 15,
+      "divergent_count": 85,
+      "confidence_stochasticity": {
+        "mean_std_confidence": 0.02393,
+        "max_confidence_drift": 0.32,
+        "is_strictly_deterministic": false
+      }
+    }
+  },
+  "risk_coverage": {
+    "Sentiment (Choice)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.6067,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.7933,
+          "retained_count": 119,
+          "total_count": 150,
+          "accuracy": 0.6891,
+          "risk": 0.3109
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.6,
+          "retained_count": 90,
+          "total_count": 150,
+          "accuracy": 0.7556,
+          "risk": 0.2444
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.4667,
+          "retained_count": 70,
+          "total_count": 150,
+          "accuracy": 0.7714,
+          "risk": 0.2286
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.38,
+          "retained_count": 57,
+          "total_count": 150,
+          "accuracy": 0.8596,
+          "risk": 0.1404
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.2533,
+          "retained_count": 38,
+          "total_count": 150,
+          "accuracy": 0.8947,
+          "risk": 0.1053
+        }
+      ]
+    },
+    "Sentiment (Noul)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.5667,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.9733,
+          "retained_count": 146,
+          "total_count": 150,
+          "accuracy": 0.5753,
+          "risk": 0.4247
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.7867,
+          "retained_count": 118,
+          "total_count": 150,
+          "accuracy": 0.6017,
+          "risk": 0.3983
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.54,
+          "retained_count": 81,
+          "total_count": 150,
+          "accuracy": 0.716,
+          "risk": 0.284
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.3067,
+          "retained_count": 46,
+          "total_count": 150,
+          "accuracy": 0.8043,
+          "risk": 0.1957
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.1067,
+          "retained_count": 16,
+          "total_count": 150,
+          "accuracy": 0.9375,
+          "risk": 0.0625
+        }
+      ]
+    },
+    "SOLD (Choice)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.6467,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.6467,
+          "retained_count": 97,
+          "total_count": 150,
+          "accuracy": 0.7629,
+          "risk": 0.2371
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.4733,
+          "retained_count": 71,
+          "total_count": 150,
+          "accuracy": 0.8451,
+          "risk": 0.1549
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.38,
+          "retained_count": 57,
+          "total_count": 150,
+          "accuracy": 0.8596,
+          "risk": 0.1404
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.2333,
+          "retained_count": 35,
+          "total_count": 150,
+          "accuracy": 0.9429,
+          "risk": 0.0571
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.14,
+          "retained_count": 21,
+          "total_count": 150,
+          "accuracy": 1.0,
+          "risk": 0.0
+        }
+      ]
+    },
+    "SOLD (Noul)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.6467,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "retained_count": 150,
+          "total_count": 150,
+          "accuracy": 0.6467,
+          "risk": 0.3533
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.58,
+          "retained_count": 87,
+          "total_count": 150,
+          "accuracy": 0.7816,
+          "risk": 0.2184
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.4067,
+          "retained_count": 61,
+          "total_count": 150,
+          "accuracy": 0.7705,
+          "risk": 0.2295
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.14,
+          "retained_count": 21,
+          "total_count": 150,
+          "accuracy": 1.0,
+          "risk": 0.0
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.0467,
+          "retained_count": 7,
+          "total_count": 150,
+          "accuracy": 1.0,
+          "risk": 0.0
+        }
+      ]
+    },
+    "NSINA Categories (Choice)": {
+      "n_samples": 100,
+      "baseline_accuracy": 0.83,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.96,
+          "retained_count": 96,
+          "total_count": 100,
+          "accuracy": 0.8438,
+          "risk": 0.1562
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.87,
+          "retained_count": 87,
+          "total_count": 100,
+          "accuracy": 0.8966,
+          "risk": 0.1034
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.84,
+          "retained_count": 84,
+          "total_count": 100,
+          "accuracy": 0.9048,
+          "risk": 0.0952
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.74,
+          "retained_count": 74,
+          "total_count": 100,
+          "accuracy": 0.9189,
+          "risk": 0.0811
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.71,
+          "retained_count": 71,
+          "total_count": 100,
+          "accuracy": 0.9296,
+          "risk": 0.0704
+        }
+      ]
+    },
+    "SinhalaMMLU (Choice)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.7333,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.5733,
+          "retained_count": 86,
+          "total_count": 150,
+          "accuracy": 0.9186,
+          "risk": 0.0814
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.5,
+          "retained_count": 75,
+          "total_count": 150,
+          "accuracy": 0.9333,
+          "risk": 0.0667
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.4333,
+          "retained_count": 65,
+          "total_count": 150,
+          "accuracy": 0.9538,
+          "risk": 0.0462
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.3533,
+          "retained_count": 53,
+          "total_count": 150,
+          "accuracy": 0.9434,
+          "risk": 0.0566
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.28,
+          "retained_count": 42,
+          "total_count": 150,
+          "accuracy": 0.9286,
+          "risk": 0.0714
+        }
+      ]
+    },
+    "SalAngaBhava (Choice)": {
+      "n_samples": 150,
+      "baseline_accuracy": 0.78,
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.62,
+          "retained_count": 93,
+          "total_count": 150,
+          "accuracy": 0.8925,
+          "risk": 0.1075
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.4467,
+          "retained_count": 67,
+          "total_count": 150,
+          "accuracy": 0.8955,
+          "risk": 0.1045
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.3533,
+          "retained_count": 53,
+          "total_count": 150,
+          "accuracy": 0.9057,
+          "risk": 0.0943
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.22,
+          "retained_count": 33,
+          "total_count": 150,
+          "accuracy": 0.9697,
+          "risk": 0.0303
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.1667,
+          "retained_count": 25,
+          "total_count": 150,
+          "accuracy": 0.96,
+          "risk": 0.04
+        }
+      ]
+    }
+  }
+}

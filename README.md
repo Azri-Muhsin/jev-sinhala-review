@@ -125,9 +125,11 @@ Stage 4: Core Pure-Sinhala Tasks (SOLD, NSINA, MMLU, SalAnga) ─► [✓ COMPLE
 Stage 5: Language & Prompt Sensitivity (English vs. Sinhala) ──► [✓ COMPLETED]
    │     (Choice parity: Δ Acc=0.000, 98% SOLD agreement, Cosine Sim >= 0.974)
    │
-Stage 6: Robustness & Diagnostics (Order, Repeatability, ECE) ──► [PENDING]
+Stage 6: Robustness & Diagnostics (Order, Repeatability, ECE) ──► [✓ COMPLETED]
+   │     (90% option stability, 100% Noul repeatability, selective acc to 100%)
    │
-Stage 7: Code-Mixed Stress Track (CMCS, N=150) ────────────────► [PENDING]
+Stage 7: Code-Mixed Stress Track (CMCS, N=150) ────────────────► [✓ COMPLETED]
+   │     (Humour Acc: 93.3%, Hate Speech Acc: 90.7%, Single-Aspect: 85.1%)
    │
 Stage 8: Quantitative Synthesis & Final Report ────────────────► [PENDING]
 ```
@@ -179,12 +181,47 @@ Evaluates whether framing instructions in **English** vs. **native Sinhala** alt
 | **SOLD (Choice Binary)** | 0.700 | 0.680 | -0.020 | 0.697 | 0.678 | -0.019 | **98.0%** | 2.0% | +0.016 | 0.0372 | **0.9963** |
 | **SOLD (Noul Binary)** | 0.680 | 0.640 | -0.040 | 0.680 | 0.630 | -0.050 | **84.0%** | 16.0% | -0.000 | 0.0800 | **0.9815** |
 
-* **Key Takeaways for RQ4:**
-  1. **Extreme Cross-Lingual Choice Stability:** Choice primitives demonstrate near-complete representation invariance between English and Sinhala instructions (Cosine Similarity $\ge 0.991$, MAD $\le 0.037$, Pearson $r \ge 0.952$). For SOLD Choice, **98.0% of decisions were identical** (only 1 flip out of 50).
-  2. **Zero Performance Penalty on Sentiment Choice:** In 4-way Sentiment, switching from English to native Sinhala yielded exactly identical accuracy ($60.0\%$) and Macro-F1 ($0.468$).
-  3. **Calibration Improvement in Native Sinhala:** Native Sinhala instructions improved calibration for Choice tasks: ECE decreased from **0.227 to 0.163** on Sentiment Choice, and from **0.186 to 0.141** on SOLD Choice.
-  4. **Noul Conservative Threshold Shift:** On SOLD Noul, all 8 flips were $\text{OFF} \to \text{NOT}$. When questioned in Sinhala (`"මෙම පළ කිරීම අපහාසාත්මක එකක්ද?"`), the model adopted a slightly stricter evidentiary threshold for offensiveness on borderline cases.
 * **Full Report:** [`results/stage5_prompt_sensitivity/summary.md`](results/stage5_prompt_sensitivity/summary.md) | [`prompt_sensitivity_report.json`](results/stage5_prompt_sensitivity/prompt_sensitivity_report.json)
+
+### Stage 6 Primitive Diagnostics & Robustness Results
+
+* **1. Option-Order Permutation Stability ($N=40$):**
+  * Evaluated across Original $[1,2,3,4]$, Shifted $[2,3,4,1]$, and Inverted $[4,3,2,1]$ orderings:
+    * **NSINA Categories (4-way):** **100.0% Stability Rate** (0.0% flips across all permutations; no position bias $\chi^2$ $p=0.402$).
+    * **SinhalaMMLU (4-option QA):** **80.0% Stability Rate** (10% shifted flip, 15% inverted flip; no significant position bias $p=0.062$).
+    * **Overall Stability:** **90.0%** across tasks.
+* **2. Multi-Pass Repeatability & Stochasticity ($N=100$, 3 passes):**
+  * Binary `Noul`: **100.0% Exact Repeatability** ($\text{mean } \sigma = 0.0093$).
+  * Multiclass `Choice`: **94.0% Exact Repeatability** ($\text{mean } \sigma = 0.0206$).
+  * Continuous `Score`: Standard deviation $\sigma = 0.0239$ across passes.
+* **3. Unified Selective Risk-Coverage:**
+  * Sweeping $\tau \in [0.50, 0.70, 0.80, 0.90, 0.95]$ systematically filters low-confidence predictions:
+    * SOLD Choice: reaches **94.3%** at $\tau \ge 0.90$ and **100.0%** at $\tau \ge 0.95$.
+    * SinhalaMMLU: reaches **94.3%** at $\tau \ge 0.90$ and **95.4%** at $\tau \ge 0.80$.
+    * SalAngaBhava: reaches **97.0%** at $\tau \ge 0.90$ and **96.0%** at $\tau \ge 0.95$.
+* **Full Report:** [`results/stage6_diagnostics/summary.md`](results/stage6_diagnostics/summary.md) | [`diagnostics_report.json`](results/stage6_diagnostics/diagnostics_report.json)
+
+### Stage 7 Code-Mixed Stress Track Results (Dataset F: CMCS, $N=150$)
+
+Evaluates non-standard, Romanized, and code-mixed Sinhala-English text across 5 target sub-tasks:
+
+| Sub-Task | Primitive | Classes | N | Accuracy | Macro-F1 | ECE | Brier Score | Mean Conf |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Sentiment** | `choice` | 4 | 150 | **0.620** | 0.440 | 0.204 | 0.579 | 0.718 |
+| **Sentiment** | `noul` | 4 | 150 | **0.573** | 0.412 | 0.191 | 0.716 | 0.764 |
+| **Humour Detection** | `choice` | 2 | 150 | **0.933** | 0.789 | 0.153 | 0.119 | 0.780 |
+| **Humour Detection** | `noul` | 2 | 150 | **0.920** | 0.778 | 0.158 | 0.184 | 0.762 |
+| **Hate Speech** | `choice` | 3 | 150 | **0.907** | 0.453 | 0.108 | 0.167 | 0.835 |
+| **Hate Speech** | `noul` | 3 | 150 | **0.893** | 0.317 | 0.070 | 0.173 | 0.845 |
+| **Single-Aspect QA** | `choice` | 5 | 47 | **0.851** | 0.816 | 0.130 | 0.223 | 0.759 |
+
+* **Multi-Label Aspect Recall (Noul):** High recall across domains: **Package: 100.0%**, **Data: 88.2%** (F1: 0.714), **Customer Service: 80.0%**, **Billing: 77.8%**, **Network: 75.0%**.
+* **Script Type Degradation Analysis (Sentiment Choice):**
+  * `Code_Mixed` ($N=17$): **70.6% Accuracy** | 0.586 Macro-F1
+  * `Pure_Sinhala` ($N=22$): **63.6% Accuracy** | 0.436 Macro-F1
+  * `Sinhala_in_Latin` ($N=111$, Singlish): **60.4% Accuracy** | 0.430 Macro-F1
+  * Performance degradation on Romanized Sinhala relative to pure Sinhala is only $\sim 3.2\%$, showing robust phonetic transliteration comprehension.
+* **Full Report:** [`results/stage7_cmcs/summary.md`](results/stage7_cmcs/summary.md) | [`cmcs_stress_report.json`](results/stage7_cmcs/cmcs_stress_report.json)
 
 ---
 
@@ -211,13 +248,17 @@ jev-sintam-review/
 │   │   ├── runner_smoke_test.py   # Stage 2 smoke test runner & gate verifier
 │   │   ├── runner_stage3_sentiment.py # Stage 3 Sentiment Primitive Equivalence
 │   │   ├── runner_stage4_core.py      # Stage 4 Core Pure-Sinhala Tasks Runner
-│   │   └── runner_stage5_prompt_sensitivity.py # Stage 5 Language & Prompt Sensitivity
-│   └── metrics/                   # Classification, calibration, consistency, sensitivity
+│   │   ├── runner_stage5_prompt_sensitivity.py # Stage 5 Language & Prompt Sensitivity
+│   │   ├── runner_stage6_diagnostics.py        # Stage 6 Option Order & Repeatability
+│   │   └── runner_stage7_cmcs.py               # Stage 7 Code-Mixed Stress Track
+│   └── metrics/                   # Classification, calibration, consistency, sensitivity, diagnostics
 ├── results/
 │   ├── smoke_test/                # Gate verification report & smoke predictions
 │   ├── stage3_sentiment/          # Stage 3 logs, consistency matrices, and tables
 │   ├── stage4_core/               # Stage 4 logs, task accuracy, and calibration reports
 │   ├── stage5_prompt_sensitivity/ # Stage 5 paired EN vs SI sensitivity reports
+│   ├── stage6_diagnostics/        # Stage 6 permutation, repeatability, and risk reports
+│   ├── stage7_cmcs/               # Stage 7 multi-task code-mixed stress reports
 │   └── figures/                   # Generated evaluation plots and diagrams
 ├── tests/
 │   ├── test_loaders.py            # Unit tests for data loaders & ZWJ preservation
@@ -256,4 +297,6 @@ python main.py --stage 2   # Phase 0 Smoke Test & Gate Verification
 python main.py --stage 3   # Stage 3: Sentiment Primitive Equivalence Lab (N=150)
 python main.py --stage 4   # Stage 4: Core Pure-Sinhala Tasks (N=650)
 python main.py --stage 5   # Stage 5: Language & Prompt Sensitivity Experiment (N=100)
+python main.py --stage 6   # Stage 6: Primitive Diagnostics & Robustness (N=140)
+python main.py --stage 7   # Stage 7: Code-Mixed Stress Track (N=150)
 ```
