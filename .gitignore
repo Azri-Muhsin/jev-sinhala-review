@@ -50,3 +50,6 @@ results/smoke_test/*.jsonl
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Planning
+implementation_plan.md
