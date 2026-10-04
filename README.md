@@ -1,5 +1,11 @@
 # Jev-Sinhala Quick Capability & Primitive Consistency Probe
 
+> [!NOTE]
+> ### 🚀 Phase 2 Scale-Up & Multi-Model Benchmark (In Progress)
+> **Phase 2 is now actively underway!** We are scaling from the Phase 1 reconnaissance probe ($N \approx 950$) to the **full benchmark census ($N = 13,054$ evaluation instances)** to test `jev-latest` against the full testing intention of the original datasets.
+> 
+> Furthermore, we are extending the evaluation across industry models: running these exact uncorrupted Sinhala benchmark datasets against **Cloudflare's Clef, Kev, and Laya models** as well for a comprehensive multi-model decision and linguistic capability benchmark. See [Section 8: Phase 2 Scale-Up & Cloudflare Comparative Benchmark](#8-phase-2-scale-up--cloudflare-comparative-benchmark-in-progress).
+
 > **Objective:** A zero-shot empirical evaluation of TypeSafe's `jev-latest` on low-resource Sinhala and Sinhala-English code-mixed benchmarks, evaluating linguistic comprehension, decision primitive consistency (`Choice`, `Noul`, `Score`), calibration quality, and robustness.
 
 ---
@@ -352,3 +358,32 @@ python main.py --stage 6   # Stage 6: Primitive Diagnostics & Robustness (N=140)
 python main.py --stage 7   # Stage 7: Code-Mixed Stress Track (N=150)
 python main.py --stage 8   # Stage 8: Quantitative Synthesis & Economist-styled Deliverables
 ```
+
+---
+
+## 8. Phase 2 Scale-Up & Cloudflare Comparative Benchmark (In Progress)
+
+With Phase 1 complete and validated across all 7 tasks, the study is advancing to **Phase 2**, expanding both the evaluation scale and model comparison surface:
+
+### 1. Full Dataset Census Scale ($N = 13,054$)
+Phase 2 evaluates the full official test splits to establish direct comparability with published EMNLP / LREC fine-tuned checkpoints:
+* **SOLD ($N = 2,500$):** 100% census of official `SOLD_test.tsv` tweets (evaluating zero-shot against Subasa-XLM-R baseline F1 0.844).
+* **SinhalaMMLU ($N = 1,854$):** 100% curriculum census across all 14 subjects in Humanities, Social Sciences, Language, and STEM.
+* **NSINA Categories ($N = 1,200$) & Media ($N = 1,000$):** Full document news categorization and 10-outlet publisher attribution.
+* **Sinhala News Sentiment ($N = 3,000$):** 4-class balanced reader comment sentiment analysis.
+* **SalAngaBhava ($N = 1,500$):** 500 Pure Sinhala + 500 Singlish + 500 Code-Mixed reviews across 6 product sectors.
+* **CMCS Multi-Task ($N = 2,000$):** Parallel evaluation of Sentiment, Humour, Hate Speech, and 6-aspect multi-label extraction ($12,000$ aspect assertions).
+
+### 2. Multi-Model Benchmark: TypeSafe Jev vs. Cloudflare Clef, Kev & Laya
+To place Jev's decision-native architecture into broader industry context, we are running these exact Sinhala datasets (identical evaluation splits, byte-for-byte UTF-8 preservation, and zero-shot instructions) against Cloudflare's suite of models:
+* **TypeSafe `jev-latest`:** System-1 decision-native engine (`Choice`, `Noul`, `Score`).
+* **Cloudflare Clef:** Fast classification and semantic routing engine.
+* **Cloudflare Kev:** Structured event, boundary, and reasoning model.
+* **Cloudflare Laya:** Multilingual representation and inference foundation model.
+
+#### Comparative Evaluation Dimensions:
+1. **Zero-Shot Accuracy & Macro-F1:** Pure Sinhala vs. Romanized Singlish vs. Code-Mixed text across models.
+2. **Epistemic Calibration & Risk-Coverage:** 20-bin ECE and accuracy under selective confidence filtering ($\tau \ge 0.90$).
+3. **Cross-Model Agreement:** Inter-model Cohen's $\kappa$ and decision concordance matrices.
+4. **Systems & Latency Efficiency:** $p_{50}$ / $p_{95}$ response times and throughput under concurrent workload.
+
