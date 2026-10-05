@@ -221,12 +221,22 @@ Before launching the full census, Phase 1 validated infrastructure, prompt langu
 
 All figures are designed in *The Economist* visual language (red tag `#E3120B`, blue `#006BA2`, cyan `#3EBCD2`, grey `#758D99`, horizontal-only gridlines):
 
+#### Full Census Scale Figures (`results/scaleup/figures/`)
 * **[Fig 8: Full Benchmark Census Capability with 95% CIs](results/scaleup/figures/fig8_scaled_benchmark_comparison.png)** — Top-1 accuracy across all primary tasks on the complete $11,434$-instance census.
 * **[Fig 9: SinhalaMMLU Academic Curriculum Breakdown](results/scaleup/figures/fig9_mmlu_faculty_breakdown.png)** — Aggregate zero-shot accuracy across STEM, Social Sciences, Humanities, and Language faculties.
+* **[Fig 10: Scaled Reliability Diagrams & ECE](results/scaleup/figures/fig10_scaled_calibration_reliability.png)** — Empirical calibration curves across 10 probability bins comparing SOLD Noul ($\text{ECE}=0.0584$), SOLD Choice ($\text{ECE}=0.1356$), and NSINA ($\text{ECE}=0.0643$).
+* **[Fig 11: Scaled Epistemic Confidence Separation](results/scaleup/figures/fig11_scaled_confidence_separation.png)** — Confidence distribution boxplots for Correct vs. Incorrect decisions across tasks from $27,258$ decisions.
+* **[Fig 12: Scaled Script Resilience Comparison](results/scaleup/figures/fig12_scaled_script_resilience.png)** — Performance comparison across Pure Sinhala, Code-Mixed, and Latinized Singlish across all $1,074$ SalAngaBhava reviews.
+* **[Fig 13: Scaled Latency Profile by Primitive](results/scaleup/figures/fig13_scaled_latency_profile.png)** — API response times ($p_{50}$ / $p_{95}$) across Choice, Noul, and Score primitives across all $27,258$ decisions.
+
+#### Phase 1 Pilot Figures (`results/figures/`)
 * **[Fig 1: Zero-shot Capability (Phase 1)](results/figures/fig1_accuracy_by_task.png)** — Macro-F1 and Top-1 accuracy with published supervised reference anchors.
 * **[Fig 2: Calibration Profiles (Phase 1)](results/figures/fig2_calibration_by_task.png)** — ECE comparison (Choice vs. Noul) and 10-bin reliability diagrams.
+* **[Fig 3: Confidence Separation (Phase 1)](results/figures/fig3_confidence_vs_correctness.png)** — Epistemic separation boxplots for initial sample.
+* **[Fig 4: Primitive Agreement (Phase 1)](results/figures/fig4_primitive_agreement.png)** — 4-way decision agreement confusion matrix (89.3% parity: Choice vs. argmax Noul).
 * **[Fig 5: Risk-Coverage Curves (Phase 1)](results/figures/fig5_risk_coverage.png)** — Selective accuracy scaling to $95\%-100\%$ at $\tau \ge 0.90$.
-* **[Fig 6: Script Type Comparison (Phase 1)](results/figures/fig6_script_type_comparison.png)** — Pure Sinhala vs. Romanized Singlish vs. Code-Mixed accuracy and ECE.
+* **[Fig 6: Script Type Comparison (Phase 1)](results/figures/fig6_script_type_comparison.png)** — Initial script comparison across CMCS subset.
+* **[Fig 7: Latency by Primitive (Phase 1)](results/figures/fig7_latency_by_primitive.png)** — Initial latency distributions.
 
 ---
 
@@ -267,7 +277,7 @@ jev-sintam-review/
 │   │   ├── mmlu_subject_breakdown.csv # 14-subject academic curriculum breakdown
 │   │   ├── script_analysis_scaled.csv # Script breakdown at scale (Pure vs. Singlish)
 │   │   ├── aspect_multilabel.csv  # 6-aspect multi-label precision/recall/F1 metrics
-│   │   ├── figures/               # Figures 8 and 9
+│   │   ├── figures/               # Figures 8, 9, 10, 11, 12, 13
 │   │   └── raw_logs/              # 7 streaming JSONL prediction files (27,258 records)
 │   ├── main.csv                   # Phase 1 summary table
 │   └── figures/                   # Phase 1 figures (Figs 1–7)
