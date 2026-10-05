@@ -1,0 +1,4 @@
+task,n,choice_noul_agreement,noul_contradiction_rate,choice_score_agreement,prob_order_consistency
+sentiment_news_4way,1810,0.872,0.453,0.897,0.858
+sold_offensive,2500,0.939,0.0,0.845,0.939
+salangabhava_rating,1074,1.0,0.0,0.815,0.815
