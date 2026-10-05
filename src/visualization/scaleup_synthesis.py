@@ -415,13 +415,16 @@ def generate_primitive_consistency_scaled_csv(records: list[dict[str, Any]]) -> 
         sold_c_num = [1 if sold_c[k]["prediction"] == "OFF" else 0 for k in common_sold if k in sold_s]
         sold_s_val = [float(sold_s[k]["prediction"]) for k in common_sold if k in sold_s]
         sold_rho, _ = spearmanr(sold_c_num, sold_s_val) if sold_c_num and sold_s_val else (0.845, 0.0)
+        p_c_off = [sold_c[k]["probabilities"].get("OFF", 0.0) for k in common_sold]
+        p_n_off = [sold_n[k]["probabilities"].get("OFF", 0.0) for k in common_sold]
+        sold_prob_rho, _ = spearmanr(p_c_off, p_n_off)
         rows.append({
             "task": "sold_offensive",
             "n": len(common_sold),
             "choice_noul_agreement": round(sold_agree, 3),
-            "noul_contradiction_rate": 0.0,
+            "noul_contradiction_rate": np.nan,
             "choice_score_agreement": round(float(sold_rho), 3),
-            "prob_order_consistency": round(sold_agree, 3),
+            "prob_order_consistency": round(float(sold_prob_rho), 3),
         })
 
     # 3. SalAngaBhava Rating (N=1,074 Choice vs Score)
@@ -433,8 +436,8 @@ def generate_primitive_consistency_scaled_csv(records: list[dict[str, Any]]) -> 
         rows.append({
             "task": "salangabhava_rating",
             "n": len(common_sal),
-            "choice_noul_agreement": 1.0,
-            "noul_contradiction_rate": 0.0,
+            "choice_noul_agreement": np.nan,
+            "noul_contradiction_rate": np.nan,
             "choice_score_agreement": round(float(sal_rho), 3),
             "prob_order_consistency": round(float(sal_rho), 3),
         })
@@ -813,7 +816,7 @@ def generate_scaleup_figures(
         fig,
         title="Throughput and response latency by decision primitive",
         subtitle="Consistent ~310ms p50 latency across categorical, binary, and continuous primitives",
-        source="Source: TypeSafe AI telemetry across 27,258 executed API decisions (Phase 2 Census)",
+        source="Source: TypeSafe AI telemetry across 37,128 executed API decisions (Phase 2 Census)",
     )
     out_f13 = save(fig, fig_dir / "fig13_scaled_latency_profile.png")
     generated.append(out_f13)
