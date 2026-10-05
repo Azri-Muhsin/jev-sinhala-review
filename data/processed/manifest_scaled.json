@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "generated_at": "2026-10-05T12:46:02.730826+00:00",
+    "random_seed": 42,
+    "phase2_targets": {
+      "dataset_a_sentiment": 3000,
+      "dataset_b_sold": 2500,
+      "dataset_c1_nsina_categories": 1200,
+      "dataset_c2_nsina_media": 1000,
+      "dataset_d_sinhalammlu": 1854,
+      "dataset_e_salangabhava": 1500,
+      "dataset_f_cmcs": 2000
+    }
+  },
+  "phase2_samples": {
+    "dataset_a_sentiment": {
+      "file": "samples_scaled/dataset_a_sentiment_scaled.jsonl",
+      "sample_size": 1810,
+      "sha256": "ad369951ada34f86421903b78f7d0159540ff9b3e0185580a41e82a795239385",
+      "label_distribution": {
+        "NEUTRAL": 820,
+        "NEGATIVE": 509,
+        "POSITIVE": 481
+      }
+    },
+    "dataset_b_sold": {
+      "file": "samples_scaled/dataset_b_sold_scaled.jsonl",
+      "sample_size": 2500,
+      "sha256": "d9b8c0f3469aad7c3a6fbcc05a05582c87a793dd92c90bd21bf7070a2f484a4d",
+      "label_distribution": {
+        "NOT": 1485,
+        "OFF": 1015
+      }
+    },
+    "dataset_c1_nsina_categories": {
+      "file": "samples_scaled/dataset_c1_nsina_categories_scaled.jsonl",
+      "sample_size": 1200,
+      "sha256": "260ae5b6f4608445e1dd28e63f646e57b770cce46f493103380b056e1af5c547",
+      "label_distribution": {
+        "Sports": 306,
+        "Local News": 308,
+        "International News": 315,
+        "Business": 271
+      }
+    },
+    "dataset_c2_nsina_media": {
+      "file": "samples_scaled/dataset_c2_nsina_media_scaled.jsonl",
+      "sample_size": 1000,
+      "sha256": "5d428ad803738e1d53045579f7eaf36b83c721e1732ad9f864ed7bcd0a847e1f",
+      "label_distribution": {
+        "divaina": 108,
+        "hirunews": 109,
+        "www.vikalpa.org": 109,
+        "ITN news": 113,
+        "Lankatruth": 111,
+        "dinamina": 81,
+        "https://sinhala.news.lk": 109,
+        "www.lankadeepa.lk": 114,
+        "Adaderana": 109,
+        "Siyatha News": 37
+      }
+    },
+    "dataset_d_sinhalammlu": {
+      "file": "samples_scaled/dataset_d_sinhalammlu_scaled.jsonl",
+      "sample_size": 1850,
+      "sha256": "c5ac9e24647ac77956de4aebb9bfe9044e5274ad294cf5b0f50e2ff7c1c67636",
+      "label_distribution": {
+        "A": 473,
+        "B": 501,
+        "D": 370,
+        "C": 506
+      }
+    },
+    "dataset_e_salangabhava": {
+      "file": "samples_scaled/dataset_e_salangabhava_scaled.jsonl",
+      "sample_size": 1074,
+      "sha256": "2766743d0c1ef2a1407126565debc94dab9bd0550da2793b2575529eaf91a05b",
+      "label_distribution": {
+        "5": 919,
+        "4": 54,
+        "1": 65,
+        "3": 22,
+        "2": 14
+      }
+    },
+    "dataset_f_cmcs": {
+      "file": "samples_scaled/dataset_f_cmcs_scaled.jsonl",
+      "sample_size": 2000,
+      "sha256": "b27e1054bc6310edbf0dc3170440ec04f15c35a958c367276631552121695a13",
+      "label_distribution": {
+        "NEUTRAL": 1272,
+        "POSITIVE": 171,
+        "NEGATIVE": 539,
+        "CONFLICT": 18
+      }
+    }
+  }
+}

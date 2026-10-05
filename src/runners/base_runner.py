@@ -12,6 +12,7 @@ Provides:
 from __future__ import annotations
 
 import json
+import threading
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,6 +51,7 @@ class BaseRunner(ABC):
 
         self.client = JevClient(config=self.config)
         self.records_logged: int = 0
+        self._lock = threading.Lock()
 
     def close(self) -> None:
         """Close the underlying client connection."""
@@ -119,11 +121,30 @@ class BaseRunner(ABC):
         }
 
     def log_record(self, record: dict[str, Any], filepath: Path) -> None:
-        """Append a single record to the target JSONL file."""
+        """Append a single record to the target JSONL file (thread-safe)."""
         filepath.parent.mkdir(parents=True, exist_ok=True)
-        with open(filepath, "a", encoding="utf-8") as f:
-            f.write(json.dumps(record, ensure_ascii=False) + "\n")
-        self.records_logged += 1
+        line = json.dumps(record, ensure_ascii=False) + "\n"
+        with self._lock:
+            with open(filepath, "a", encoding="utf-8") as f:
+                f.write(line)
+            self.records_logged += 1
+
+    def load_completed_record_ids(self, filepath: Path) -> set[str]:
+        """Load already completed record IDs from an existing JSONL file for idempotent resume."""
+        completed: set[str] = set()
+        if not filepath.exists():
+            return completed
+        with open(filepath, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        obj = json.loads(line)
+                        if "record_id" in obj:
+                            completed.add(obj["record_id"])
+                    except Exception:
+                        continue
+        return completed
 
     @abstractmethod
     def run(self) -> dict[str, Any]:

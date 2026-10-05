@@ -1,0 +1,4 @@
+dataset,script_type,n,accuracy,macro_f1,ece,mean_confidence,p50_latency_ms
+SalAngaBhava,Code_Mixed,74,0.6622,0.2973,0.1238,0.6308,296.5
+SalAngaBhava,Pure_Sinhala,500,0.728,0.3603,0.1127,0.6161,305.9
+SalAngaBhava,Sinhala_in_English,500,0.528,0.2264,0.0523,0.4886,306.8

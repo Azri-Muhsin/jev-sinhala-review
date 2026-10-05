@@ -24,8 +24,25 @@ phase1_sizes:
   dataset_e_salangabhava: 150
   dataset_f_cmcs: 150
 
-# ECE calibration bins
+# Phase 2 full benchmark census: sample sizes per dataset (N = 13,054)
+phase2_sizes:
+  dataset_a_sentiment: 3000
+  dataset_b_sold: 2500
+  dataset_c1_nsina_categories: 1200
+  dataset_c2_nsina_media: 1000
+  dataset_d_sinhalammlu: 1854
+  dataset_e_salangabhava: 1500
+  dataset_f_cmcs: 2000
+
+# Concurrency & Async Execution Settings for Scale-Up
+concurrency:
+  max_workers: 8
+  rate_limit_rps: 25
+  checkpoint_batch_size: 50
+
+# ECE calibration bins (Phase 1: 10 bins, Phase 2: 20 bins)
 ece_bins: 10
+phase2_ece_bins: 20
 
 # TypeSafe SDK retry policy (exponential backoff with jitter)
 max_retries: 5

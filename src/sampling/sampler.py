@@ -26,8 +26,10 @@ import numpy as np
 
 from src.config import (
     DATA_PROCESSED_DIR,
+    DATA_PROCESSED_SCALED_DIR,
     PHASE0_N_PER_TASK,
     PHASE1_SAMPLE_SIZES,
+    PHASE2_SAMPLE_SIZES,
     RANDOM_SEED,
 )
 from src.loaders.base import BaseLoader, DatasetRecord
@@ -45,9 +47,11 @@ class StratifiedSampler:
         self.processed_dir = processed_dir or DATA_PROCESSED_DIR
         self.smoke_dir = self.processed_dir / "phase0_smoke"
         self.samples_dir = self.processed_dir / "samples"
+        self.scaled_samples_dir = self.processed_dir / "samples_scaled"
 
         self.smoke_dir.mkdir(parents=True, exist_ok=True)
         self.samples_dir.mkdir(parents=True, exist_ok=True)
+        self.scaled_samples_dir.mkdir(parents=True, exist_ok=True)
 
     def sample_records(
         self,
@@ -219,4 +223,67 @@ class StratifiedSampler:
             json.dump(manifest, f, indent=2, ensure_ascii=False)
 
         print(f"\nManifest committed to: {manifest_path}")
+        return manifest
+
+    def generate_scaled_samples(
+        self,
+        loaders: list[BaseLoader],
+        target_sizes: dict[str, int] | None = None,
+    ) -> dict[str, Any]:
+        """Generate Phase 2 full benchmark census sample files and manifest_scaled.json."""
+        targets = target_sizes or PHASE2_SAMPLE_SIZES
+        manifest: dict[str, Any] = {
+            "metadata": {
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "random_seed": self.seed,
+                "phase2_targets": targets,
+            },
+            "phase2_samples": {},
+        }
+
+        for loader in loaders:
+            ds_id = loader.dataset_id
+            print(f"Sampling scaled dataset: {ds_id}...")
+
+            # For SalAngaBhava, ensure we load all review types (filter_pure_sinhala=False)
+            if ds_id == "dataset_e_salangabhava" and hasattr(loader, "filter_pure_sinhala"):
+                loader.filter_pure_sinhala = False
+
+            records = loader.load()
+            p2_n = targets.get(ds_id, len(records))
+
+            # Special stratification for SalAngaBhava: 500 Pure + 500 Singlish + 500 Code-Mixed
+            if ds_id == "dataset_e_salangabhava":
+                pure_recs = [r for r in records if r.metadata.get("review_type") == "Pure_Sinhala"]
+                sing_recs = [
+                    r for r in records
+                    if r.metadata.get("review_type") in {"Sinhala_in_English", "Sinhala_in_Latin"}
+                ]
+                mixed_recs = [r for r in records if r.metadata.get("review_type") == "Code_Mixed"]
+
+                s_pure = self.sample_records(pure_recs, target_n=500)
+                s_sing = self.sample_records(sing_recs, target_n=500)
+                s_mixed = self.sample_records(mixed_recs, target_n=500)
+                p2_records = sorted(s_pure + s_sing + s_mixed, key=lambda r: r.example_id)
+            else:
+                p2_records = self.sample_records(records, target_n=p2_n)
+
+            p2_path = self.scaled_samples_dir / f"{ds_id}_scaled.jsonl"
+            p2_hash = self.save_jsonl(p2_records, p2_path)
+            p2_dist = dict(Counter(r.gold_label for r in p2_records))
+
+            manifest["phase2_samples"][ds_id] = {
+                "file": str(p2_path.relative_to(self.processed_dir)).replace("\\", "/"),
+                "sample_size": len(p2_records),
+                "sha256": p2_hash,
+                "label_distribution": p2_dist,
+            }
+            print(f"  -> Phase 2 Scaled: {len(p2_records)} items (SHA256: {p2_hash[:10]}...)")
+
+        # Write manifest_scaled.json
+        manifest_path = self.processed_dir / "manifest_scaled.json"
+        with open(manifest_path, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, indent=2, ensure_ascii=False)
+
+        print(f"\nScaled Manifest committed to: {manifest_path}")
         return manifest

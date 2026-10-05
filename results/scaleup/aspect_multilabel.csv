@@ -1,0 +1,7 @@
+aspect,total_evaluated,positive_support,accuracy,precision,recall,f1
+billing,2000,98,0.875,0.25,0.7755,0.3781
+customer service,2000,130,0.924,0.4495,0.7538,0.5632
+data,2000,180,0.892,0.4489,0.8778,0.594
+network,2000,210,0.839,0.3793,0.8381,0.5223
+package,2000,86,0.939,0.4062,0.907,0.5612
+service,2000,443,0.7295,0.4109,0.5102,0.4552

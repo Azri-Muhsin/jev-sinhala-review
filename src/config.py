@@ -24,10 +24,13 @@ CONFIGS_DIR = PROJECT_ROOT / "configs"
 DATA_DIR = PROJECT_ROOT / "data"
 DATA_RAW_DIR = DATA_DIR / "raw"
 DATA_PROCESSED_DIR = DATA_DIR / "processed"
+DATA_PROCESSED_SCALED_DIR = DATA_PROCESSED_DIR / "samples_scaled"
 RESULTS_DIR = PROJECT_ROOT / "results"
 RESULTS_RAW_LOGS_DIR = RESULTS_DIR / "raw_logs"
 RESULTS_FIGURES_DIR = RESULTS_DIR / "figures"
 RESULTS_SMOKE_DIR = RESULTS_DIR / "smoke_test"
+RESULTS_SCALEUP_DIR = RESULTS_DIR / "scaleup"
+RESULTS_SCALEUP_LOGS_DIR = RESULTS_SCALEUP_DIR / "raw_logs"
 
 # ---------------------------------------------------------------------------
 # Constants (non-negotiable)
@@ -37,6 +40,7 @@ MODEL_NAME: str = "jev-latest"
 RANDOM_SEED: int = 42
 PHASE0_N_PER_TASK: int = 20
 ECE_NUM_BINS: int = 10
+PHASE2_ECE_NUM_BINS: int = 20
 
 # Phase 1 sample sizes per dataset
 PHASE1_SAMPLE_SIZES: dict[str, int] = {
@@ -47,6 +51,17 @@ PHASE1_SAMPLE_SIZES: dict[str, int] = {
     "dataset_d_sinhalammlu": 150,
     "dataset_e_salangabhava": 150,
     "dataset_f_cmcs": 150,
+}
+
+# Phase 2 full benchmark census sizes per dataset (N = 13,054)
+PHASE2_SAMPLE_SIZES: dict[str, int] = {
+    "dataset_a_sentiment": 3000,
+    "dataset_b_sold": 2500,
+    "dataset_c1_nsina_categories": 1200,
+    "dataset_c2_nsina_media": 1000,
+    "dataset_d_sinhalammlu": 1854,
+    "dataset_e_salangabhava": 1500,
+    "dataset_f_cmcs": 2000,
 }
 
 
@@ -100,7 +115,13 @@ class ExperimentConfig:
     seed: int = RANDOM_SEED
     phase0_n: int = PHASE0_N_PER_TASK
     phase1_sizes: dict[str, int] = field(default_factory=lambda: dict(PHASE1_SAMPLE_SIZES))
+    phase2_sizes: dict[str, int] = field(default_factory=lambda: dict(PHASE2_SAMPLE_SIZES))
     ece_bins: int = ECE_NUM_BINS
+    phase2_ece_bins: int = PHASE2_ECE_NUM_BINS
+
+    # Concurrency and rate limiting
+    max_workers: int = 8
+    rate_limit_rps: float = 25.0
 
     # Retry policy for TypeSafe SDK
     max_retries: int = 5
@@ -120,12 +141,17 @@ class ExperimentConfig:
             raw = load_yaml("experiments.yaml")
         except FileNotFoundError:
             return cls()
+        concurrency = raw.get("concurrency", {})
         return cls(
             model=raw.get("model", MODEL_NAME),
             seed=raw.get("seed", RANDOM_SEED),
             phase0_n=raw.get("phase0_n", PHASE0_N_PER_TASK),
             phase1_sizes=raw.get("phase1_sizes", dict(PHASE1_SAMPLE_SIZES)),
+            phase2_sizes=raw.get("phase2_sizes", dict(PHASE2_SAMPLE_SIZES)),
             ece_bins=raw.get("ece_bins", ECE_NUM_BINS),
+            phase2_ece_bins=raw.get("phase2_ece_bins", PHASE2_ECE_NUM_BINS),
+            max_workers=concurrency.get("max_workers", 8),
+            rate_limit_rps=concurrency.get("rate_limit_rps", 25.0),
             max_retries=raw.get("max_retries", 5),
             backoff_initial=raw.get("backoff_initial", 2.0),
             backoff_max=raw.get("backoff_max", 30.0),
