@@ -20,7 +20,7 @@ def main():
         SentimentLoader(),
         SOLDLoader(),
         NSINACategoriesLoader(),
-        NSINAMediaLoader(),
+        # NSINAMediaLoader(),  # Deprecated: media outlet classification
         SinhalaMMLULoader(),
         SalAngaBhavaLoader(filter_pure_sinhala=False),
         CMCSLoader(),

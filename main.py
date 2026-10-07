@@ -174,7 +174,7 @@ def stage1_data_acquisition() -> bool:
         SentimentLoader(),
         SOLDLoader(),
         NSINACategoriesLoader(),
-        NSINAMediaLoader(),
+        # NSINAMediaLoader(),  # Deprecated: media outlet classification
         SinhalaMMLULoader(),
         SalAngaBhavaLoader(),
         CMCSLoader(),

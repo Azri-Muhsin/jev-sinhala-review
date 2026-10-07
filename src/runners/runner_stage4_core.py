@@ -528,9 +528,10 @@ class CorePureSinhalaRunner(BaseRunner):
         rec_c1 = self._load_sample("dataset_c1_nsina_categories.jsonl")
         nsina_cat_records = self.run_nsina_categories_task(rec_c1)
 
-        # 3. Dataset C2: NSINA Media
-        rec_c2 = self._load_sample("dataset_c2_nsina_media.jsonl")
-        nsina_media_records = self.run_nsina_media_task(rec_c2)
+        # 3. Dataset C2: NSINA Media (Deprecated: media outlet classification)
+        # rec_c2 = self._load_sample("dataset_c2_nsina_media.jsonl")
+        # nsina_media_records = self.run_nsina_media_task(rec_c2)
+        nsina_media_records = []
 
         # 4. Dataset D: SinhalaMMLU
         rec_d = self._load_sample("dataset_d_sinhalammlu.jsonl")
@@ -554,9 +555,9 @@ class CorePureSinhalaRunner(BaseRunner):
         self,
         sold_records: list[dict[str, Any]],
         nsina_cat_records: list[dict[str, Any]],
-        nsina_media_records: list[dict[str, Any]],
-        mmlu_records: list[dict[str, Any]],
-        salanga_records: list[dict[str, Any]],
+        nsina_media_records: list[dict[str, Any]] | None = None,
+        mmlu_records: list[dict[str, Any]] = None,
+        salanga_records: list[dict[str, Any]] = None,
     ) -> dict[str, Any]:
         """Synthesize metrics across all five core pure-Sinhala tasks."""
         print("\n" + "─" * 70)
@@ -601,18 +602,20 @@ class CorePureSinhalaRunner(BaseRunner):
         }
         print(f"  [NSINA Categories] Choice Acc: {m_c1['accuracy']:.1%} (F1: {m_c1['macro_f1']:.3f}, ECE: {cal_c1['ece']:.3f})")
 
-        # 3. NSINA Media Analysis
-        c2_choice = [r for r in nsina_media_records if r["primitive"] == "choice"]
-        m_c2 = compute_classification_metrics(
-            [r["gold_label"] for r in c2_choice],
-            [r["prediction"] for r in c2_choice],
-        )
-        cal_c2 = compute_ece([r["confidence"] for r in c2_choice], [r["is_correct"] for r in c2_choice])
-        rc_c2 = compute_selective_risk_coverage([r["confidence"] for r in c2_choice], [r["is_correct"] for r in c2_choice])
-        task_metrics["dataset_c2_nsina_media"] = {
-            "choice": {**m_c2, "ece": cal_c2["ece"], "risk_coverage": rc_c2}
-        }
-        print(f"  [NSINA Media]      Choice Acc: {m_c2['accuracy']:.1%} (F1: {m_c2['macro_f1']:.3f}, ECE: {cal_c2['ece']:.3f}) [Random: 10%]")
+        # 3. NSINA Media Analysis (Guarded)
+        c2_choice = []
+        if nsina_media_records:
+            c2_choice = [r for r in nsina_media_records if r["primitive"] == "choice"]
+            m_c2 = compute_classification_metrics(
+                [r["gold_label"] for r in c2_choice],
+                [r["prediction"] for r in c2_choice],
+            )
+            cal_c2 = compute_ece([r["confidence"] for r in c2_choice], [r["is_correct"] for r in c2_choice])
+            rc_c2 = compute_selective_risk_coverage([r["confidence"] for r in c2_choice], [r["is_correct"] for r in c2_choice])
+            task_metrics["dataset_c2_nsina_media"] = {
+                "choice": {**m_c2, "ece": cal_c2["ece"], "risk_coverage": rc_c2}
+            }
+            print(f"  [NSINA Media]      Choice Acc: {m_c2['accuracy']:.1%} (F1: {m_c2['macro_f1']:.3f}, ECE: {cal_c2['ece']:.3f}) [Random: 10%]")
 
         # 4. SinhalaMMLU Analysis
         d_choice = [r for r in mmlu_records if r["primitive"] == "choice"]
@@ -726,8 +729,9 @@ class CorePureSinhalaRunner(BaseRunner):
             t_c1 = tasks["dataset_c1_nsina_categories"]
             f.write(f"| **NSINA Categories** | News Articles | 4 Categories | Choice | **{t_c1['choice']['accuracy']:.1%}** | {t_c1['choice']['macro_f1']:.3f} | {t_c1['choice']['ece']:.3f} | 25.0% |\n")
 
-            t_c2 = tasks["dataset_c2_nsina_media"]
-            f.write(f"| **NSINA Media** | News Articles | 10 Sources | Choice | **{t_c2['choice']['accuracy']:.1%}** | {t_c2['choice']['macro_f1']:.3f} | {t_c2['choice']['ece']:.3f} | 10.0% |\n")
+            if "dataset_c2_nsina_media" in tasks:
+                t_c2 = tasks["dataset_c2_nsina_media"]
+                f.write(f"| **NSINA Media** | News Articles | 10 Sources | Choice | **{t_c2['choice']['accuracy']:.1%}** | {t_c2['choice']['macro_f1']:.3f} | {t_c2['choice']['ece']:.3f} | 10.0% |\n")
 
             t_d = tasks["dataset_d_sinhalammlu"]
             f.write(f"| **SinhalaMMLU** | Multi-discipline QA | 4 Options (`A`/`B`/`C`/`D`) | Choice | **{t_d['choice']['accuracy']:.1%}** | {t_d['choice']['macro_f1']:.3f} | {t_d['choice']['ece']:.3f} | 25.0% |\n")

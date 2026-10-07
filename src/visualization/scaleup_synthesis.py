@@ -120,7 +120,7 @@ def generate_main_scaled_csv(records: list[dict[str, Any]]) -> pd.DataFrame:
         ("dataset_b_sold", "noul", "SOLD Offensiveness (Noul)", "dataset_b_sold", None),
         ("dataset_b_sold", "choice", "SOLD Offensiveness (Choice)", "dataset_b_sold", None),
         ("dataset_c1_nsina_categories", "choice", "NSINA Categories", "dataset_c1_nsina_categories", None),
-        ("dataset_c2_nsina_media", "choice", "NSINA Media Identification", "dataset_c2_nsina_media", None),
+        # ("dataset_c2_nsina_media", "choice", "NSINA Media Identification", "dataset_c2_nsina_media", None),
         ("dataset_d_sinhalammlu", "choice", "SinhalaMMLU Academic QA", "dataset_d_sinhalammlu", None),
         ("dataset_a_sentiment", "choice", "News Sentiment (Choice)", "dataset_a_sentiment", None),
         ("dataset_a_sentiment", "noul", "News Sentiment (Noul)", "dataset_a_sentiment", None),

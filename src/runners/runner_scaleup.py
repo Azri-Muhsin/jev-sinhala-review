@@ -791,7 +791,7 @@ class ScaledCensusRunner(BaseRunner):
         tasks = [
             ("SOLD (Twitter)", self.run_sold),
             ("NSINA Categories", self.run_nsina_categories),
-            ("NSINA Media Identification", self.run_nsina_media),
+            # ("NSINA Media Identification", self.run_nsina_media),  # Deprecated: media outlet classification
             ("SinhalaMMLU Academic QA", self.run_mmlu),
             ("News-Comment Sentiment", self.run_sentiment),
             ("SalAngaBhava Reviews", self.run_salangabhava),

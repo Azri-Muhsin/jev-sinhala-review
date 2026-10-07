@@ -47,18 +47,18 @@ PHASE1_SAMPLE_SIZES: dict[str, int] = {
     "dataset_a_sentiment": 150,
     "dataset_b_sold": 150,
     "dataset_c1_nsina_categories": 100,
-    "dataset_c2_nsina_media": 100,
+    # "dataset_c2_nsina_media": 100,
     "dataset_d_sinhalammlu": 150,
     "dataset_e_salangabhava": 150,
     "dataset_f_cmcs": 150,
 }
 
-# Phase 2 full benchmark census sizes per dataset (N = 13,054)
+# Phase 2 full benchmark census sizes per dataset (N = 10,434)
 PHASE2_SAMPLE_SIZES: dict[str, int] = {
     "dataset_a_sentiment": 3000,
     "dataset_b_sold": 2500,
     "dataset_c1_nsina_categories": 1200,
-    "dataset_c2_nsina_media": 1000,
+    # "dataset_c2_nsina_media": 1000,
     "dataset_d_sinhalammlu": 1854,
     "dataset_e_salangabhava": 1500,
     "dataset_f_cmcs": 2000,

@@ -70,7 +70,7 @@ def plot_fig1_accuracy_by_task(main_df: pd.DataFrame) -> Path:
         ("SOLD Offensive", "dataset_b_sold", "choice", 0.647, 0.640, 0.840),
         ("CMCS Sentiment", "dataset_f_cmcs", "choice", 0.620, 0.440, None),
         ("Sinhala Sentiment", "dataset_a_sentiment", "choice", 0.607, 0.461, None),
-        ("NSINA Media Source", "dataset_c2_nsina_media", "choice", 0.200, 0.158, 0.880),
+        # ("NSINA Media Source", "dataset_c2_nsina_media", "choice", 0.200, 0.158, 0.880),
     ]
 
     y_pos = np.arange(len(tasks))

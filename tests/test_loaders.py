@@ -33,12 +33,12 @@ from src.sampling import StratifiedSampler
 
 @pytest.fixture(scope="module")
 def all_loaders() -> list[BaseLoader]:
-    """Instantiate all 7 task loaders."""
+    """Instantiate active task loaders (6 datasets)."""
     return [
         SentimentLoader(),
         SOLDLoader(),
         NSINACategoriesLoader(),
-        NSINAMediaLoader(),
+        # NSINAMediaLoader(),  # Deprecated: media outlet classification
         SinhalaMMLULoader(),
         SalAngaBhavaLoader(),
         CMCSLoader(),
@@ -46,8 +46,8 @@ def all_loaders() -> list[BaseLoader]:
 
 
 def test_loaders_instantiation(all_loaders: list[BaseLoader]) -> None:
-    """Ensure all loaders inherit from BaseLoader and declare dataset_id and label_set."""
-    assert len(all_loaders) == 7
+    """Ensure all active loaders inherit from BaseLoader and declare dataset_id and label_set."""
+    assert len(all_loaders) == 6
     for loader in all_loaders:
         assert isinstance(loader, BaseLoader)
         assert isinstance(loader.dataset_id, str)
@@ -86,16 +86,14 @@ def test_dataset_b_sold(all_loaders: list[BaseLoader]) -> None:
 
 
 def test_dataset_c_nsina(all_loaders: list[BaseLoader]) -> None:
-    """Test NSINACategoriesLoader (C1) and NSINAMediaLoader (C2)."""
+    """Test NSINACategoriesLoader (C1)."""
     c1 = next(l for l in all_loaders if l.dataset_id == "dataset_c1_nsina_categories")
     c1_records = c1.load()
     assert len(c1_records) > 0
     assert len(c1.label_set) >= 4
 
-    c2 = next(l for l in all_loaders if l.dataset_id == "dataset_c2_nsina_media")
-    c2_records = c2.load()
-    assert len(c2_records) > 0
-    assert len(c2.label_set) >= 8
+    # C2 (NSINA Media) deprecated and removed from active benchmark suite.
+    # c2 = next(l for l in all_loaders if l.dataset_id == "dataset_c2_nsina_media")
 
 
 def test_dataset_d_sinhalammlu(all_loaders: list[BaseLoader]) -> None:
@@ -163,7 +161,7 @@ def test_manifest_and_frozen_samples() -> None:
         "dataset_a_sentiment",
         "dataset_b_sold",
         "dataset_c1_nsina_categories",
-        "dataset_c2_nsina_media",
+        # "dataset_c2_nsina_media",  # Deprecated
         "dataset_d_sinhalammlu",
         "dataset_e_salangabhava",
         "dataset_f_cmcs",

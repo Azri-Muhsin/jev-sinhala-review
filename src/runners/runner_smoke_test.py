@@ -843,9 +843,9 @@ class SmokeTestRunner(BaseRunner):
         rec_c1 = self.load_smoke_records("dataset_c1_nsina_categories_smoke.jsonl")
         results["dataset_c1_nsina_categories"] = self.run_nsina_categories_task(rec_c1)
 
-        # 4. Dataset C2
-        rec_c2 = self.load_smoke_records("dataset_c2_nsina_media_smoke.jsonl")
-        results["dataset_c2_nsina_media"] = self.run_nsina_media_task(rec_c2)
+        # 4. Dataset C2 (Deprecated: media outlet classification)
+        # rec_c2 = self.load_smoke_records("dataset_c2_nsina_media_smoke.jsonl")
+        # results["dataset_c2_nsina_media"] = self.run_nsina_media_task(rec_c2)
 
         # 5. Dataset D
         rec_d = self.load_smoke_records("dataset_d_sinhalammlu_smoke.jsonl")
